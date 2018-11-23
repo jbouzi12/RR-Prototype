@@ -1,32 +1,6 @@
 const { GraphQLServer } = require('graphql-yoga')
 
-const typeDefs = `
-	type Query {
-  info: String!
-  feed: [Link!]!
-  artists: [Artist!]!
-}
 
-	type Artist {
-				_id: ID!
-				name: String!
-				age: Int!
-				description: String!
-				region: String
-				yearStarted: Int
-				
-			}
-
-type Link {
-  _id: ID!
-  description: String!
-  url: String!
-}
-
-		
-
-
-`
 
   // artist(_id: ID, name: String): Artist
 
@@ -89,16 +63,17 @@ let artists = [{
   description: 'Toroto idiot'
 }]
 
+let idCount = artists.length
+
 const resolvers = {
-	Query: {
-			
-			info: () => `This is the API of a Hackernews Clone`,
-    		feed: () => links,
-    		artists: () => artists
+	Query: {	
+		info: () => `This is the API of a Hackernews Clone`,
+    	feed: () => links,
+    	artists: () => artists
 			// artists: async () => {
 			// 	return (await Artists.find({}).toArray()).map(prepare)
 			// }
-		},
+	},
 	Artist: {
 		_id: (root) => root._id,
 		name: (root) => root.name,
@@ -110,13 +85,25 @@ const resolvers = {
 		_id: (root) => root._id,
 		description: (root) => root.description,
 		url: (root) => root.url,
+	},
+	Mutation: {
+		newArtist: (root, args) => {
+			const artist = {
+				_id: `artist-${idCount++}`,
+				description: args.description,
+				name: args.name,
+				age: args.age
+			}
+			artists.push(artist)
+			return artist
+		}
 	}
 		 
 }
 
 
 const server = new GraphQLServer({
-	typeDefs,
+	typeDefs: './src/schema.graphql',
 	resolvers
 })
 
