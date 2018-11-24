@@ -1,0 +1,11 @@
+
+
+
+type Artist {
+	id: ID! @unique
+	name: String!
+	age: Int!
+	description: String!
+	region: String
+	yearStarted: Int			
+}

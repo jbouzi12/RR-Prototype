@@ -1,5 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga')
-
+const { Prisma } = require('prisma-binding')
 
 
   // artist(_id: ID, name: String): Artist
@@ -50,52 +50,33 @@ const { GraphQLServer } = require('graphql-yoga')
 			// 	mutation: Mutation
 			// }
 
-let links = [{
-  _id: 'link-0',
-  url: 'www.howtographql.com',
-  description: 'Fullstack tutorial for GraphQL'
-}]
 
-let artists = [{
-  _id: 'artist-0',
-  name: 'Drake',
-  age: 31,
-  description: 'Toroto idiot'
-}]
 
-let idCount = artists.length
 
 const resolvers = {
 	Query: {	
-		info: () => `This is the API of a Hackernews Clone`,
-    	feed: () => links,
-    	artists: () => artists
-			// artists: async () => {
-			// 	return (await Artists.find({}).toArray()).map(prepare)
-			// }
+    	artists: () => (root, args, context, info) => {
+    		return context.db.query.artists({}, info)
+    	}
 	},
 	Artist: {
-		_id: (root) => root._id,
+		id: (root) => root._id,
 		name: (root) => root.name,
 		age: (root) => root.age,
 		description: (root) => root.description
 
 		},
-	Link: {
-		_id: (root) => root._id,
-		description: (root) => root.description,
-		url: (root) => root.url,
-	},
 	Mutation: {
-		newArtist: (root, args) => {
-			const artist = {
-				_id: `artist-${idCount++}`,
-				description: args.description,
-				name: args.name,
-				age: args.age
-			}
-			artists.push(artist)
-			return artist
+		newArtist: (root, args, context, info) => {
+			return context.db.mutation.createArtist({
+				data: {
+					description: args.description,
+					name: args.name,
+					age: args.age,
+					region: args.region
+				},
+			}, info)
+		
 		}
 	}
 		 
@@ -104,7 +85,16 @@ const resolvers = {
 
 const server = new GraphQLServer({
 	typeDefs: './src/schema.graphql',
-	resolvers
+	resolvers,
+	context: req => ({
+		...req,
+		db: new Prisma({
+			typeDefs: 'src/generated/prisma.graphql',
+			endpoint: 'https://us1.prisma.sh/mrbouzi/database/dev',
+			secret: 'mysecret123',
+			debug: true
+		})
+	})
 })
 
 server.start(() => console.log("Server is running on http://localhost:4000"))

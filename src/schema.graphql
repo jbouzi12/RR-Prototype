@@ -1,23 +1,9 @@
+# import Artist from "./generated/prisma.graphql"
+
 type Query {
-	info: String!
-	feed: [Link!]!
 	artists: [Artist!]!
 }
 
-type Artist {
-	_id: ID!
-	name: String!
-	age: Int!
-	description: String!
-	region: String
-	yearStarted: Int			
-}
-
-type Link {
-	 _id: ID!
-	 description: String!
-	 url: String!
-}
 
 type Mutation {
 	newArtist(name: String, age: Int, description: String!): Artist!
