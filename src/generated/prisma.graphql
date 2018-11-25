@@ -1,5 +1,5 @@
 # source: https://us1.prisma.sh/mrbouzi/database/dev
-# timestamp: Sun Nov 25 2018 00:37:32 GMT-0500 (EST)
+# timestamp: Sun Nov 25 2018 13:56:24 GMT-0500 (EST)
 
 type AggregateAlbum {
   count: Int!
@@ -20,6 +20,7 @@ type AggregateUser {
 type Album implements Node {
   id: ID!
   name: String!
+  artist: Artist!
   releaseDate: String
 }
 
@@ -36,11 +37,17 @@ type AlbumConnection {
 input AlbumCreateInput {
   name: String!
   releaseDate: String
+  artist: ArtistCreateOneWithoutAlbumsInput!
 }
 
-input AlbumCreateManyInput {
-  create: [AlbumCreateInput!]
+input AlbumCreateManyWithoutArtistInput {
+  create: [AlbumCreateWithoutArtistInput!]
   connect: [AlbumWhereUniqueInput!]
+}
+
+input AlbumCreateWithoutArtistInput {
+  name: String!
+  releaseDate: String
 }
 
 """An edge in a connection."""
@@ -241,14 +248,10 @@ input AlbumSubscriptionWhereInput {
   node: AlbumWhereInput
 }
 
-input AlbumUpdateDataInput {
-  name: String
-  releaseDate: String
-}
-
 input AlbumUpdateInput {
   name: String
   releaseDate: String
+  artist: ArtistUpdateOneRequiredWithoutAlbumsInput
 }
 
 input AlbumUpdateManyDataInput {
@@ -256,20 +259,20 @@ input AlbumUpdateManyDataInput {
   releaseDate: String
 }
 
-input AlbumUpdateManyInput {
-  create: [AlbumCreateInput!]
-  connect: [AlbumWhereUniqueInput!]
-  disconnect: [AlbumWhereUniqueInput!]
-  delete: [AlbumWhereUniqueInput!]
-  update: [AlbumUpdateWithWhereUniqueNestedInput!]
-  updateMany: [AlbumUpdateManyWithWhereNestedInput!]
-  deleteMany: [AlbumScalarWhereInput!]
-  upsert: [AlbumUpsertWithWhereUniqueNestedInput!]
-}
-
 input AlbumUpdateManyMutationInput {
   name: String
   releaseDate: String
+}
+
+input AlbumUpdateManyWithoutArtistInput {
+  create: [AlbumCreateWithoutArtistInput!]
+  connect: [AlbumWhereUniqueInput!]
+  disconnect: [AlbumWhereUniqueInput!]
+  delete: [AlbumWhereUniqueInput!]
+  update: [AlbumUpdateWithWhereUniqueWithoutArtistInput!]
+  updateMany: [AlbumUpdateManyWithWhereNestedInput!]
+  deleteMany: [AlbumScalarWhereInput!]
+  upsert: [AlbumUpsertWithWhereUniqueWithoutArtistInput!]
 }
 
 input AlbumUpdateManyWithWhereNestedInput {
@@ -277,15 +280,20 @@ input AlbumUpdateManyWithWhereNestedInput {
   data: AlbumUpdateManyDataInput!
 }
 
-input AlbumUpdateWithWhereUniqueNestedInput {
-  where: AlbumWhereUniqueInput!
-  data: AlbumUpdateDataInput!
+input AlbumUpdateWithoutArtistDataInput {
+  name: String
+  releaseDate: String
 }
 
-input AlbumUpsertWithWhereUniqueNestedInput {
+input AlbumUpdateWithWhereUniqueWithoutArtistInput {
   where: AlbumWhereUniqueInput!
-  update: AlbumUpdateDataInput!
-  create: AlbumCreateInput!
+  data: AlbumUpdateWithoutArtistDataInput!
+}
+
+input AlbumUpsertWithWhereUniqueWithoutArtistInput {
+  where: AlbumWhereUniqueInput!
+  update: AlbumUpdateWithoutArtistDataInput!
+  create: AlbumCreateWithoutArtistInput!
 }
 
 input AlbumWhereInput {
@@ -417,6 +425,7 @@ input AlbumWhereInput {
 
   """All values not ending with the given string."""
   releaseDate_not_ends_with: String
+  artist: ArtistWhereInput
 }
 
 input AlbumWhereUniqueInput {
@@ -430,7 +439,6 @@ type Artist implements Node {
   description: String!
   region: String
   yearStarted: Int
-  createdBy: User
   scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
 }
@@ -451,24 +459,41 @@ input ArtistCreateInput {
   description: String!
   region: String
   yearStarted: Int
-  createdBy: UserCreateOneWithoutArtistsInput
-  scores: ScoreCreateManyInput
-  albums: AlbumCreateManyInput
+  scores: ScoreCreateManyWithoutArtistInput
+  albums: AlbumCreateManyWithoutArtistInput
 }
 
-input ArtistCreateManyWithoutCreatedByInput {
-  create: [ArtistCreateWithoutCreatedByInput!]
+input ArtistCreateManyInput {
+  create: [ArtistCreateInput!]
   connect: [ArtistWhereUniqueInput!]
 }
 
-input ArtistCreateWithoutCreatedByInput {
+input ArtistCreateOneWithoutAlbumsInput {
+  create: ArtistCreateWithoutAlbumsInput
+  connect: ArtistWhereUniqueInput
+}
+
+input ArtistCreateOneWithoutScoresInput {
+  create: ArtistCreateWithoutScoresInput
+  connect: ArtistWhereUniqueInput
+}
+
+input ArtistCreateWithoutAlbumsInput {
   name: String!
   age: Int!
   description: String!
   region: String
   yearStarted: Int
-  scores: ScoreCreateManyInput
-  albums: AlbumCreateManyInput
+  scores: ScoreCreateManyWithoutArtistInput
+}
+
+input ArtistCreateWithoutScoresInput {
+  name: String!
+  age: Int!
+  description: String!
+  region: String
+  yearStarted: Int
+  albums: AlbumCreateManyWithoutArtistInput
 }
 
 """An edge in a connection."""
@@ -762,15 +787,24 @@ input ArtistSubscriptionWhereInput {
   node: ArtistWhereInput
 }
 
+input ArtistUpdateDataInput {
+  name: String
+  age: Int
+  description: String
+  region: String
+  yearStarted: Int
+  scores: ScoreUpdateManyWithoutArtistInput
+  albums: AlbumUpdateManyWithoutArtistInput
+}
+
 input ArtistUpdateInput {
   name: String
   age: Int
   description: String
   region: String
   yearStarted: Int
-  createdBy: UserUpdateOneWithoutArtistsInput
-  scores: ScoreUpdateManyInput
-  albums: AlbumUpdateManyInput
+  scores: ScoreUpdateManyWithoutArtistInput
+  albums: AlbumUpdateManyWithoutArtistInput
 }
 
 input ArtistUpdateManyDataInput {
@@ -781,6 +815,17 @@ input ArtistUpdateManyDataInput {
   yearStarted: Int
 }
 
+input ArtistUpdateManyInput {
+  create: [ArtistCreateInput!]
+  connect: [ArtistWhereUniqueInput!]
+  disconnect: [ArtistWhereUniqueInput!]
+  delete: [ArtistWhereUniqueInput!]
+  update: [ArtistUpdateWithWhereUniqueNestedInput!]
+  updateMany: [ArtistUpdateManyWithWhereNestedInput!]
+  deleteMany: [ArtistScalarWhereInput!]
+  upsert: [ArtistUpsertWithWhereUniqueNestedInput!]
+}
+
 input ArtistUpdateManyMutationInput {
   name: String
   age: Int
@@ -789,41 +834,62 @@ input ArtistUpdateManyMutationInput {
   yearStarted: Int
 }
 
-input ArtistUpdateManyWithoutCreatedByInput {
-  create: [ArtistCreateWithoutCreatedByInput!]
-  connect: [ArtistWhereUniqueInput!]
-  disconnect: [ArtistWhereUniqueInput!]
-  delete: [ArtistWhereUniqueInput!]
-  update: [ArtistUpdateWithWhereUniqueWithoutCreatedByInput!]
-  updateMany: [ArtistUpdateManyWithWhereNestedInput!]
-  deleteMany: [ArtistScalarWhereInput!]
-  upsert: [ArtistUpsertWithWhereUniqueWithoutCreatedByInput!]
-}
-
 input ArtistUpdateManyWithWhereNestedInput {
   where: ArtistScalarWhereInput!
   data: ArtistUpdateManyDataInput!
 }
 
-input ArtistUpdateWithoutCreatedByDataInput {
+input ArtistUpdateOneRequiredWithoutAlbumsInput {
+  create: ArtistCreateWithoutAlbumsInput
+  connect: ArtistWhereUniqueInput
+  update: ArtistUpdateWithoutAlbumsDataInput
+  upsert: ArtistUpsertWithoutAlbumsInput
+}
+
+input ArtistUpdateOneRequiredWithoutScoresInput {
+  create: ArtistCreateWithoutScoresInput
+  connect: ArtistWhereUniqueInput
+  update: ArtistUpdateWithoutScoresDataInput
+  upsert: ArtistUpsertWithoutScoresInput
+}
+
+input ArtistUpdateWithoutAlbumsDataInput {
   name: String
   age: Int
   description: String
   region: String
   yearStarted: Int
-  scores: ScoreUpdateManyInput
-  albums: AlbumUpdateManyInput
+  scores: ScoreUpdateManyWithoutArtistInput
 }
 
-input ArtistUpdateWithWhereUniqueWithoutCreatedByInput {
-  where: ArtistWhereUniqueInput!
-  data: ArtistUpdateWithoutCreatedByDataInput!
+input ArtistUpdateWithoutScoresDataInput {
+  name: String
+  age: Int
+  description: String
+  region: String
+  yearStarted: Int
+  albums: AlbumUpdateManyWithoutArtistInput
 }
 
-input ArtistUpsertWithWhereUniqueWithoutCreatedByInput {
+input ArtistUpdateWithWhereUniqueNestedInput {
   where: ArtistWhereUniqueInput!
-  update: ArtistUpdateWithoutCreatedByDataInput!
-  create: ArtistCreateWithoutCreatedByInput!
+  data: ArtistUpdateDataInput!
+}
+
+input ArtistUpsertWithoutAlbumsInput {
+  update: ArtistUpdateWithoutAlbumsDataInput!
+  create: ArtistCreateWithoutAlbumsInput!
+}
+
+input ArtistUpsertWithoutScoresInput {
+  update: ArtistUpdateWithoutScoresDataInput!
+  create: ArtistCreateWithoutScoresInput!
+}
+
+input ArtistUpsertWithWhereUniqueNestedInput {
+  where: ArtistWhereUniqueInput!
+  update: ArtistUpdateDataInput!
+  create: ArtistCreateInput!
 }
 
 input ArtistWhereInput {
@@ -1039,7 +1105,6 @@ input ArtistWhereInput {
 
   """All values greater than or equal the given value."""
   yearStarted_gte: Int
-  createdBy: UserWhereInput
   scores_every: ScoreWhereInput
   scores_some: ScoreWhereInput
   scores_none: ScoreWhereInput
@@ -1050,6 +1115,7 @@ input ArtistWhereInput {
 
 input ArtistWhereUniqueInput {
   id: ID
+  name: String
 }
 
 type BatchPayload {
@@ -1064,27 +1130,30 @@ Long can represent values between -(2^63) and 2^63 - 1.
 scalar Long
 
 type Mutation {
-  createArtist(data: ArtistCreateInput!): Artist!
   createUser(data: UserCreateInput!): User!
   createScore(data: ScoreCreateInput!): Score!
   createAlbum(data: AlbumCreateInput!): Album!
-  updateArtist(data: ArtistUpdateInput!, where: ArtistWhereUniqueInput!): Artist
+  createArtist(data: ArtistCreateInput!): Artist!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateScore(data: ScoreUpdateInput!, where: ScoreWhereUniqueInput!): Score
   updateAlbum(data: AlbumUpdateInput!, where: AlbumWhereUniqueInput!): Album
-  deleteArtist(where: ArtistWhereUniqueInput!): Artist
+  updateArtist(data: ArtistUpdateInput!, where: ArtistWhereUniqueInput!): Artist
   deleteUser(where: UserWhereUniqueInput!): User
+  deleteScore(where: ScoreWhereUniqueInput!): Score
   deleteAlbum(where: AlbumWhereUniqueInput!): Album
-  upsertArtist(where: ArtistWhereUniqueInput!, create: ArtistCreateInput!, update: ArtistUpdateInput!): Artist!
+  deleteArtist(where: ArtistWhereUniqueInput!): Artist
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  upsertScore(where: ScoreWhereUniqueInput!, create: ScoreCreateInput!, update: ScoreUpdateInput!): Score!
   upsertAlbum(where: AlbumWhereUniqueInput!, create: AlbumCreateInput!, update: AlbumUpdateInput!): Album!
-  updateManyArtists(data: ArtistUpdateManyMutationInput!, where: ArtistWhereInput): BatchPayload!
+  upsertArtist(where: ArtistWhereUniqueInput!, create: ArtistCreateInput!, update: ArtistUpdateInput!): Artist!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
   updateManyScores(data: ScoreUpdateManyMutationInput!, where: ScoreWhereInput): BatchPayload!
   updateManyAlbums(data: AlbumUpdateManyMutationInput!, where: AlbumWhereInput): BatchPayload!
-  deleteManyArtists(where: ArtistWhereInput): BatchPayload!
+  updateManyArtists(data: ArtistUpdateManyMutationInput!, where: ArtistWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
   deleteManyScores(where: ScoreWhereInput): BatchPayload!
   deleteManyAlbums(where: AlbumWhereInput): BatchPayload!
+  deleteManyArtists(where: ArtistWhereInput): BatchPayload!
 }
 
 enum MutationType {
@@ -1115,17 +1184,18 @@ type PageInfo {
 }
 
 type Query {
-  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist]!
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score]!
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album]!
-  artist(where: ArtistWhereUniqueInput!): Artist
+  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist]!
   user(where: UserWhereUniqueInput!): User
+  score(where: ScoreWhereUniqueInput!): Score
   album(where: AlbumWhereUniqueInput!): Album
-  artistsConnection(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistConnection!
+  artist(where: ArtistWhereUniqueInput!): Artist
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   scoresConnection(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScoreConnection!
   albumsConnection(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumConnection!
+  artistsConnection(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -1134,9 +1204,11 @@ type Query {
   ): Node
 }
 
-type Score {
-  category: String
-  amount: Int
+type Score implements Node {
+  id: ID!
+  category: String!
+  amount: Int!
+  artist: Artist!
 }
 
 """A connection to a list of items."""
@@ -1150,12 +1222,19 @@ type ScoreConnection {
 }
 
 input ScoreCreateInput {
-  category: String
-  amount: Int
+  category: String!
+  amount: Int!
+  artist: ArtistCreateOneWithoutScoresInput!
 }
 
-input ScoreCreateManyInput {
-  create: [ScoreCreateInput!]
+input ScoreCreateManyWithoutArtistInput {
+  create: [ScoreCreateWithoutArtistInput!]
+  connect: [ScoreWhereUniqueInput!]
+}
+
+input ScoreCreateWithoutArtistInput {
+  category: String!
+  amount: Int!
 }
 
 """An edge in a connection."""
@@ -1168,12 +1247,12 @@ type ScoreEdge {
 }
 
 enum ScoreOrderByInput {
+  id_ASC
+  id_DESC
   category_ASC
   category_DESC
   amount_ASC
   amount_DESC
-  id_ASC
-  id_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1181,8 +1260,9 @@ enum ScoreOrderByInput {
 }
 
 type ScorePreviousValues {
-  category: String
-  amount: Int
+  id: ID!
+  category: String!
+  amount: Int!
 }
 
 input ScoreScalarWhereInput {
@@ -1194,6 +1274,46 @@ input ScoreScalarWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [ScoreScalarWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   category: String
 
   """All values that are not equal to given value."""
@@ -1297,15 +1417,15 @@ input ScoreSubscriptionWhereInput {
   node: ScoreWhereInput
 }
 
+input ScoreUpdateInput {
+  category: String
+  amount: Int
+  artist: ArtistUpdateOneRequiredWithoutScoresInput
+}
+
 input ScoreUpdateManyDataInput {
   category: String
   amount: Int
-}
-
-input ScoreUpdateManyInput {
-  create: [ScoreCreateInput!]
-  updateMany: [ScoreUpdateManyWithWhereNestedInput!]
-  deleteMany: [ScoreScalarWhereInput!]
 }
 
 input ScoreUpdateManyMutationInput {
@@ -1313,9 +1433,36 @@ input ScoreUpdateManyMutationInput {
   amount: Int
 }
 
+input ScoreUpdateManyWithoutArtistInput {
+  create: [ScoreCreateWithoutArtistInput!]
+  connect: [ScoreWhereUniqueInput!]
+  disconnect: [ScoreWhereUniqueInput!]
+  delete: [ScoreWhereUniqueInput!]
+  update: [ScoreUpdateWithWhereUniqueWithoutArtistInput!]
+  updateMany: [ScoreUpdateManyWithWhereNestedInput!]
+  deleteMany: [ScoreScalarWhereInput!]
+  upsert: [ScoreUpsertWithWhereUniqueWithoutArtistInput!]
+}
+
 input ScoreUpdateManyWithWhereNestedInput {
   where: ScoreScalarWhereInput!
   data: ScoreUpdateManyDataInput!
+}
+
+input ScoreUpdateWithoutArtistDataInput {
+  category: String
+  amount: Int
+}
+
+input ScoreUpdateWithWhereUniqueWithoutArtistInput {
+  where: ScoreWhereUniqueInput!
+  data: ScoreUpdateWithoutArtistDataInput!
+}
+
+input ScoreUpsertWithWhereUniqueWithoutArtistInput {
+  where: ScoreWhereUniqueInput!
+  update: ScoreUpdateWithoutArtistDataInput!
+  create: ScoreCreateWithoutArtistInput!
 }
 
 input ScoreWhereInput {
@@ -1327,6 +1474,46 @@ input ScoreWhereInput {
 
   """Logical NOT on all given filters combined by AND."""
   NOT: [ScoreWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
   category: String
 
   """All values that are not equal to given value."""
@@ -1389,13 +1576,18 @@ input ScoreWhereInput {
 
   """All values greater than or equal the given value."""
   amount_gte: Int
+  artist: ArtistWhereInput
+}
+
+input ScoreWhereUniqueInput {
+  id: ID
 }
 
 type Subscription {
-  artist(where: ArtistSubscriptionWhereInput): ArtistSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
   score(where: ScoreSubscriptionWhereInput): ScoreSubscriptionPayload
   album(where: AlbumSubscriptionWhereInput): AlbumSubscriptionPayload
+  artist(where: ArtistSubscriptionWhereInput): ArtistSubscriptionPayload
 }
 
 type User implements Node {
@@ -1420,18 +1612,7 @@ input UserCreateInput {
   email: String!
   name: String!
   password: String!
-  artists: ArtistCreateManyWithoutCreatedByInput
-}
-
-input UserCreateOneWithoutArtistsInput {
-  create: UserCreateWithoutArtistsInput
-  connect: UserWhereUniqueInput
-}
-
-input UserCreateWithoutArtistsInput {
-  email: String!
-  name: String!
-  password: String!
+  artists: ArtistCreateManyInput
 }
 
 """An edge in a connection."""
@@ -1508,33 +1689,13 @@ input UserUpdateInput {
   email: String
   name: String
   password: String
-  artists: ArtistUpdateManyWithoutCreatedByInput
+  artists: ArtistUpdateManyInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   name: String
   password: String
-}
-
-input UserUpdateOneWithoutArtistsInput {
-  create: UserCreateWithoutArtistsInput
-  connect: UserWhereUniqueInput
-  disconnect: Boolean
-  delete: Boolean
-  update: UserUpdateWithoutArtistsDataInput
-  upsert: UserUpsertWithoutArtistsInput
-}
-
-input UserUpdateWithoutArtistsDataInput {
-  email: String
-  name: String
-  password: String
-}
-
-input UserUpsertWithoutArtistsInput {
-  update: UserUpdateWithoutArtistsDataInput!
-  create: UserCreateWithoutArtistsInput!
 }
 
 input UserWhereInput {

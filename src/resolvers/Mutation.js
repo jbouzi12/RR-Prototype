@@ -38,7 +38,7 @@ async function login(parent, args, context, info) {
 }
 
 async function newArtist(parent, args, context, info) {
-	const userId = getUserId(context)
+	// const userId = getUserId(context)
 	return context.db.mutation.createArtist({
 		data: {
 			description: args.description,
@@ -46,8 +46,30 @@ async function newArtist(parent, args, context, info) {
 			age: args.age,
 			region: args.region,
 			albums: args.albums,
-			scores: args.scores,
-			createdBy: {connect: {id: userId}}
+			scores: args.scores
+			// createdBy: {connect: {id: userId}}
+		},
+	}, info)
+		
+}
+
+async function newAlbum(parent, args, context, info) {
+	return context.db.mutation.createAlbum({
+		data: {
+			name: args.name,
+			artist: {connect: {name: args.artistName}},
+			releaseDate: args.releaseDate
+		},
+	}, info)
+		
+}
+
+async function newScore(parent, args, context, info) {
+	return context.db.mutation.createScore({
+		data: {
+			category: args.category,
+			artist: {connect: {name: args.artistName}},
+			amount: args.amount
 		},
 	}, info)
 		
@@ -56,5 +78,7 @@ async function newArtist(parent, args, context, info) {
 module.exports = {
 	signup,
 	login,
-	newArtist
+	newArtist,
+	newAlbum,
+	newScore
 }
