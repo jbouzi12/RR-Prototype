@@ -5,52 +5,6 @@ const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const AuthPayload = require('./resolvers/AuthPayload')
 
-  // artist(_id: ID, name: String): Artist
-
-
-
-
-			// type Query {
-			
-			// 	artist(_id: String, name: String): Artist
-			// 	artists: Artist
-			// }
-
-
-
-// albums: [Album]
-// 				scores: [Score]
-
-			// type Album {
-			// 	_id: String
-			// 	name: String
-			// 	releaseDate: String
-			// }
-
-			// type Score {
-			// 	category: String
-			// 	amount: Int
-			// }
-
-			// type Query {
-			// 	user(_id: String): User
-			// 	users: User
-			// 	artist(_id: String, name: String): Artist
-			// 	artists: Artist
-			// 	album(_id: String, name: String): Album
-			// 	albums: Album
-			// }
-
-			// type Mutation {
-			// 	updateArtist(category: String, amount: Int): Score
-			// }
-
-			// schema {
-			// 	query: Query
-			// 	mutation: Mutation
-			// }
-
-
 
 
 // const resolvers = {

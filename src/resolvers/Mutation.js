@@ -45,6 +45,8 @@ async function newArtist(parent, args, context, info) {
 			name: args.name,
 			age: args.age,
 			region: args.region,
+			albums: args.albums,
+			scores: args.scores,
 			createdBy: {connect: {id: userId}}
 		},
 	}, info)

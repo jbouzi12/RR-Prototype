@@ -2,6 +2,10 @@
 
 type Query {
 	artists: [Artist!]!
+	users: [User!]!
+	albums: [Album!]!
+	scores: [Score!]!
+
 }
 
 
@@ -9,6 +13,19 @@ type Mutation {
 	newArtist(name: String, age: Int, description: String!): Artist!
 	signup(email: String!, password: String!, name: String!): AuthPayload
 	login(email: String!, password: String!): AuthPayload
+}
+
+
+type Album {
+	id: ID!
+	name: String!
+	releaseDate: String
+}
+
+
+type Score {
+	category: String
+	amount: Int
 }
 
 type AuthPayload {

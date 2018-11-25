@@ -7,5 +7,28 @@ type Artist {
 	age: Int!
 	description: String!
 	region: String
-	yearStarted: Int			
+	yearStarted: Int
+	createdBy: User
+	scores: [Score!]!
+	albums: [Album!]!			
+}
+
+type User {
+	id: ID! @unique
+	email: String! @unique
+	name: String!
+	password: String!
+	artists: [Artist!]!
+}
+
+
+type Score {
+	category: String
+	amount: Int
+}
+
+type Album {
+	id: ID! @unique
+	name: String!
+	releaseDate: String
 }
