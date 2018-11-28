@@ -1,0 +1,36 @@
+
+
+
+type Artist {
+	id: ID! @unique
+	name: String! @unique
+	age: Int!
+	description: String!
+	region: String
+	yearStarted: Int
+	scores: [Score!]!
+	albums: [Album!]!			
+}
+
+type User {
+	id: ID! @unique
+	email: String! @unique
+	name: String!
+	password: String!
+	artists: [Artist!]!
+}
+
+
+type Score {
+	id: ID! @unique
+	category: String!
+	amount: Int!
+	artist: Artist!
+}
+
+type Album {
+	id: ID! @unique
+	name: String!
+	artist: Artist!
+	releaseDate: String
+}
