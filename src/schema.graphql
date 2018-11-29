@@ -16,6 +16,7 @@ type Mutation {
 	login(email: String!, password: String!): AuthPayload
 	newAlbum(name: String!, artistName: String!): Album!
 	newScore(amount: Int!, category: String!, artistName: String!): Score!
+	pickArtist(userId: ID!, artistName: String!): User!
 }
 
 

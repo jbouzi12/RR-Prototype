@@ -71,14 +71,24 @@ async function newScore(parent, args, context, info) {
 			artist: {connect: {name: args.artistName}},
 			amount: args.amount
 		},
-	}, info)
-		
+	}, info)	
 }
+
+async function pickArtist(parent, args, context, info) {
+	// const userId = getUserId(context)
+	return context.db.mutation.updateUser({
+		data: {
+			artist: {connect: {name: args.artistName}},
+		},
+	}, info)		
+}
+
 
 module.exports = {
 	signup,
 	login,
 	newArtist,
 	newAlbum,
-	newScore
+	newScore,
+	pickArtist
 }
