@@ -5,6 +5,7 @@ import {
   Text,
   View,
 } from 'react-native';
+import ArtistList from './components/ArtistList'
 // import './styles/index.css'
 // import App from './components/App'
 // import registerServiceWorker from './registerServiceWorker'
@@ -12,7 +13,6 @@ import {ApolloProvider} from 'react-apollo'
 import {ApolloClient} from 'apollo-client'
 import {createHttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
-
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -33,11 +33,7 @@ export default class App extends Component<Props> {
   render() {
     return (
     <ApolloProvider client={client}>
-	      <View style={styles.container}>
-	        <Text style={styles.welcome}>Welcome to React Native! Han</Text>
-	        <Text style={styles.instructions}>To get started, edit App.js</Text>
-	        <Text style={styles.instructions}>{instructions}</Text>
-	      </View>
+	     <ArtistList />
 	 </ApolloProvider>
     );
   }
