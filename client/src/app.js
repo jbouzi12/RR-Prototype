@@ -13,6 +13,8 @@ import {ApolloProvider} from 'react-apollo'
 import {ApolloClient} from 'apollo-client'
 import {createHttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
+
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -22,6 +24,7 @@ const instructions = Platform.select({
 
 const httpLink = createHttpLink({
 	uri: 'http://localhost:4000'
+	// uri: 'https://us1.prisma.sh/mrbouzi/database/dev'
 })
 
 const client = new ApolloClient({
@@ -39,6 +42,21 @@ export default class App extends Component<Props> {
   }
 }
 
+//
+// const ArtistDetails = graphql(ARTIST_QUERY)(({data}) => {
+//     		const {loading, allArtists } = data
+//     		if (loading) return <View><Text> loading...</Text></View>
+//     		if(error) return <Text> Error </Text>
+//     		return (
+// 			    <View style={{ padding: 10 }}>
+// 			      {allArtists.map(({ name, id }) => (
+// 			        <Text key={id}>
+// 			          {name}
+// 			        </Text>
+// 			      ))}
+// 			    </View>
+// 			);
+//     	})
 
 
 
