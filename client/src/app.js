@@ -42,22 +42,6 @@ export default class App extends Component<Props> {
   }
 }
 
-//
-// const ArtistDetails = graphql(ARTIST_QUERY)(({data}) => {
-//     		const {loading, allArtists } = data
-//     		if (loading) return <View><Text> loading...</Text></View>
-//     		if(error) return <Text> Error </Text>
-//     		return (
-// 			    <View style={{ padding: 10 }}>
-// 			      {allArtists.map(({ name, id }) => (
-// 			        <Text key={id}>
-// 			          {name}
-// 			        </Text>
-// 			      ))}
-// 			    </View>
-// 			);
-//     	})
-
 
 
 const styles = StyleSheet.create({

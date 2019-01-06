@@ -42,7 +42,7 @@ export default class ArtistList extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'black',
+    backgroundColor: 'white',
     flex: 1,
   }
 });
