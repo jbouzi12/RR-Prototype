@@ -1,5 +1,7 @@
 # RR-Prototype
 
+npm install
+
 cd server
 
 npm install
