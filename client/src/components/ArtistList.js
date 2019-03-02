@@ -30,6 +30,7 @@ export default class ArtistList extends Component {
     			}
 
     			 const artists = data.artists
+           console.log("ARTIST:", data)
     		return (
     			<View style={styles.container}>{artists.map(artist => <Artist key={artist.id} artist={artist} />)}</View>
     		)
