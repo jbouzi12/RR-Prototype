@@ -9,19 +9,22 @@ import {
   View,
 } from 'react-native';
 
-
-export default class Artist extends Component<Props> {
-
+export default class ArtistDetails extends Component<Props> {
+	
   render() {
 
-  	const { id, name } = this.props.artist;
-
-  	
-
+  
     return (
-	    <View key={id} style={styles.groupContainer}>
-	        <Text style={styles.groupName}>{name}</Text>
-	    </View>
+	   <View
+	   	style={{
+	   		flex: 1,
+	   		paddingTop: 80,
+	   		justifyContent: 'flex-start',
+	   		alignItems: 'center'
+	   	}}
+	   >
+	   	<Text>Hello Artist</Text>
+	   </View>
     );
   }
 }

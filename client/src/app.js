@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
+  NavigatorIOS
 } from 'react-native';
 import ArtistList from './components/ArtistList'
 // import './styles/index.css'
@@ -36,7 +37,11 @@ export default class App extends Component<Props> {
   render() {
     return (
     <ApolloProvider client={client}>
-	     <ArtistList />
+	     <NavigatorIOS 
+	     	style={{flex:1}}
+	     	initialRoute={{component: ArtistList,
+	     		title: 'Artists'}}
+	     	/>
 	 </ApolloProvider>
     );
   }

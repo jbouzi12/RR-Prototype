@@ -10,15 +10,27 @@ import {
 } from 'react-native';
 
 import Artist from './Artist';
+import ArtistDetails from './ArtistDetails';
+
 
 import { Query } from 'react-apollo';
 import gql from 'graphql-tag';
 
 export default class ArtistList extends Component {
+
+  pressRow = (artist) => {
+      this.props.navigator.push({
+        title: "Push Event",
+        component: ArtistDetails,
+        passProps: {
+          pushEvent: artist
+        }
+      })
+    }
 	
   render() {
 
-
+  
     return (
     	<Query query={ARTIST_QUERY}>
     		{({ loading, error, data}) => {
@@ -32,7 +44,17 @@ export default class ArtistList extends Component {
     			 const artists = data.artists
            console.log("ARTIST:", data)
     		return (
-    			<View style={styles.container}>{artists.map(artist => <Artist key={artist.id} artist={artist} />)}</View>
+    			<View style={styles.container}>{artists.map(artist =>    
+            <TouchableHighlight
+              key={artist.id} 
+              onPress={() => this.pressRow(artist)}
+              underlayColor="#ddd"
+            > 
+              <Artist 
+                artist={artist} 
+              />
+            </TouchableHighlight>)}
+          </View>
     		)
 
     		}}
@@ -45,6 +67,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
+    marginTop: 100
   }
 });
 
