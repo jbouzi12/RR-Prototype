@@ -7,23 +7,54 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Image
 } from 'react-native';
 
 export default class ArtistDetails extends Component<Props> {
+	 	
 	
   render() {
+  	let artist = this.props.pushEvent,
+  		image = ""
+  	;
+
 
   
     return (
 	   <View
-	   	style={{
-	   		flex: 1,
-	   		paddingTop: 80,
-	   		justifyContent: 'flex-start',
-	   		alignItems: 'center'
-	   	}}
+	   		style={{
+		   		flex: 1,
+		   		paddingTop: 120,
+		   		justifyContent: 'flex-start',
+		   		alignItems: 'center'
+	   		}}
 	   >
-	   	<Text>Hello Artist</Text>
+	   		 <Image
+		   		source={{uri: artist.image ? artist.image : ""}}
+		   		style={{
+		   			height: 120,
+		   			width: 120,
+		   			borderRadius: 60
+		   		}}
+		   	/>
+	  		<Text
+	  			style={{
+	  				paddingTop: 20,
+	  				paddingBottom: 20,
+	  				fontSize: 40
+	  			}}
+	  		>
+	  			{artist.name}
+	  		</Text>
+	  		<Text
+	  			style={{
+	  				paddingTop: 20,
+	  				paddingBottom: 20,
+	  				fontSize: 20
+	  			}}
+	  		>
+	  			{artist.description}
+	  		</Text>
 	   </View>
     );
   }

@@ -44,6 +44,7 @@ async function newArtist(parent, args, context, info) {
 			description: args.description,
 			name: args.name,
 			age: args.age,
+			image: args.image,
 			region: args.region,
 			albums: args.albums,
 			scores: args.scores
@@ -75,10 +76,30 @@ async function newScore(parent, args, context, info) {
 		
 }
 
+async function updateArtist(parent, args, context, info) {
+
+	return context.db.mutation.updateArtist({
+		data: {
+			description: args.description,
+			name: args.name,
+			age: args.age,
+			image: args.image,
+			region: args.region,
+			albums: args.albums,
+			scores: args.scores
+		},
+		where: {	
+			id: args.id
+		},
+	}, info)
+		
+}
+
 module.exports = {
 	signup,
 	login,
 	newArtist,
 	newAlbum,
-	newScore
+	newScore,
+	updateArtist
 }

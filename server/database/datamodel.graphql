@@ -6,6 +6,7 @@ type Artist {
 	name: String! @unique
 	age: Int!
 	description: String!
+	image: String
 	region: String
 	yearStarted: Int
 	scores: [Score!]!

@@ -18,6 +18,10 @@ import gql from 'graphql-tag';
 
 export default class ArtistList extends Component {
 
+  static propTypes = {
+    navigator: PropTypes.object.isRequired,
+  }
+
   pressRow = (artist) => {
       this.props.navigator.push({
         title: "Push Event",
@@ -77,6 +81,7 @@ const ARTIST_QUERY = gql`
 			id
 			name
 			description
+      image
 		}
 	}
 `

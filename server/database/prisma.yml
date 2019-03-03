@@ -12,3 +12,7 @@ secret: mysecret123
 hooks:
   post-deploy:
     - graphql get-schema --project database
+    - prisma generate
+generate:
+  - generator: graphql-schema
+    output: ../src/generated/

@@ -11,11 +11,12 @@ type Query {
 
 
 type Mutation {
-	newArtist(name: String!, age: Int!, description: String!): Artist!
+	newArtist(name: String!, age: Int!, description: String!, image: String!): Artist!
 	signup(email: String!, password: String!, name: String!): AuthPayload
 	login(email: String!, password: String!): AuthPayload
 	newAlbum(name: String!, artistName: String!): Album!
 	newScore(amount: Int!, category: String!, artistName: String!): Score!
+	updateArtist(id: ID!, name: String, age: Int, description: String, image: String): Artist!
 }
 
 
