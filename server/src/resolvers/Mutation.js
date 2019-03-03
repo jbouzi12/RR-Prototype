@@ -51,7 +51,7 @@ async function newArtist(parent, args, context, info) {
 			// createdBy: {connect: {id: userId}}
 		},
 	}, info)
-		
+
 }
 
 async function newAlbum(parent, args, context, info) {
@@ -62,7 +62,7 @@ async function newAlbum(parent, args, context, info) {
 			releaseDate: args.releaseDate
 		},
 	}, info)
-		
+
 }
 
 async function newScore(parent, args, context, info) {
@@ -73,7 +73,7 @@ async function newScore(parent, args, context, info) {
 			amount: args.amount
 		},
 	}, info)
-		
+
 }
 
 async function updateArtist(parent, args, context, info) {
@@ -88,11 +88,81 @@ async function updateArtist(parent, args, context, info) {
 			albums: args.albums,
 			scores: args.scores
 		},
-		where: {	
+		where: {
 			id: args.id
 		},
 	}, info)
-		
+
+}
+
+async function addArtist(parent, args, context, info) {
+
+	return context.db.mutation.updateArtist({
+		data: {
+			description: args.description,
+			name: args.name,
+			age: args.age,
+			image: args.image,
+			region: args.region,
+			albums: args.albums,
+			scores: args.scores
+		},
+		where: {
+			id: args.id
+		},
+	}, info)
+
+}
+
+async function updateArtist(parent, args, context, info) {
+
+	return context.db.mutation.updateArtist({
+		data: {
+			description: args.description,
+			name: args.name,
+			age: args.age,
+			image: args.image,
+			region: args.region,
+			albums: args.albums,
+			scores: args.scores
+		},
+		where: {
+			id: args.id
+		},
+	}, info)
+
+}
+
+async function addTopArtist(parent, args, context, info) {
+
+	return context.db.mutation.updateUser({
+		data: {
+			artists: {
+				connect: {id: args.id}
+			}
+		},
+		where: {
+			email: args.email
+		},
+	}, info)
+
+}
+
+async function removeTopArtist(parent, args, context, info) {
+
+
+		return context.db.mutation.updateUser({
+			data: {
+				artists: {
+					disconnect: {id: args.id}
+				}
+			},
+			where: {
+				email: args.email
+			},
+		}, info)
+
+
 }
 
 module.exports = {
@@ -101,5 +171,7 @@ module.exports = {
 	newArtist,
 	newAlbum,
 	newScore,
-	updateArtist
+	updateArtist,
+	addTopArtist,
+	removeTopArtist
 }

@@ -17,6 +17,9 @@ type Mutation {
 	newAlbum(name: String!, artistName: String!): Album!
 	newScore(amount: Int!, category: String!, artistName: String!): Score!
 	updateArtist(id: ID!, name: String, age: Int, description: String, image: String): Artist!
+	addTopArtist(id: ID!, email: String!): User!
+	removeTopArtist(id: ID!, email: String!): User!
+
 }
 
 
