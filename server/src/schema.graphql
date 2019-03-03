@@ -1,0 +1,48 @@
+# import Artist from "./generated/prisma.graphql"
+
+type Query {
+	artists: [Artist!]!
+	users: [User!]!
+	albums: [Album!]!
+	scores: [Score!]!
+	artist: Artist!
+	album: Album!
+}
+
+
+type Mutation {
+	newArtist(name: String!, age: Int!, description: String!, image: String!): Artist!
+	signup(email: String!, password: String!, name: String!): AuthPayload
+	login(email: String!, password: String!): AuthPayload
+	newAlbum(name: String!, artistName: String!): Album!
+	newScore(amount: Int!, category: String!, artistName: String!): Score!
+	updateArtist(id: ID!, name: String, age: Int, description: String, image: String): Artist!
+}
+
+
+type Album {
+	id: ID!
+	name: String!
+	releaseDate: String
+	artist: Artist!
+}
+
+
+type Score {
+	id: ID!
+	category: String!
+	amount: Int!
+	artist: Artist!
+}
+
+type AuthPayload {
+	token: String
+	user: User
+}
+
+type User {
+	id: ID!
+	name: String!
+	email: String!
+	artists: [Artist!]!
+}

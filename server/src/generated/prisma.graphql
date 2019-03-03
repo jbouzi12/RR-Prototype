@@ -1,0 +1,1092 @@
+type AggregateAlbum {
+  count: Int!
+}
+
+type AggregateArtist {
+  count: Int!
+}
+
+type AggregateScore {
+  count: Int!
+}
+
+type AggregateUser {
+  count: Int!
+}
+
+type Album {
+  id: ID!
+  name: String!
+  artist: Artist!
+  releaseDate: String
+}
+
+type AlbumConnection {
+  pageInfo: PageInfo!
+  edges: [AlbumEdge]!
+  aggregate: AggregateAlbum!
+}
+
+input AlbumCreateInput {
+  name: String!
+  artist: ArtistCreateOneWithoutAlbumsInput!
+  releaseDate: String
+}
+
+input AlbumCreateManyWithoutArtistInput {
+  create: [AlbumCreateWithoutArtistInput!]
+  connect: [AlbumWhereUniqueInput!]
+}
+
+input AlbumCreateWithoutArtistInput {
+  name: String!
+  releaseDate: String
+}
+
+type AlbumEdge {
+  node: Album!
+  cursor: String!
+}
+
+enum AlbumOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  releaseDate_ASC
+  releaseDate_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type AlbumPreviousValues {
+  id: ID!
+  name: String!
+  releaseDate: String
+}
+
+input AlbumScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  releaseDate: String
+  releaseDate_not: String
+  releaseDate_in: [String!]
+  releaseDate_not_in: [String!]
+  releaseDate_lt: String
+  releaseDate_lte: String
+  releaseDate_gt: String
+  releaseDate_gte: String
+  releaseDate_contains: String
+  releaseDate_not_contains: String
+  releaseDate_starts_with: String
+  releaseDate_not_starts_with: String
+  releaseDate_ends_with: String
+  releaseDate_not_ends_with: String
+  AND: [AlbumScalarWhereInput!]
+  OR: [AlbumScalarWhereInput!]
+  NOT: [AlbumScalarWhereInput!]
+}
+
+type AlbumSubscriptionPayload {
+  mutation: MutationType!
+  node: Album
+  updatedFields: [String!]
+  previousValues: AlbumPreviousValues
+}
+
+input AlbumSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: AlbumWhereInput
+  AND: [AlbumSubscriptionWhereInput!]
+  OR: [AlbumSubscriptionWhereInput!]
+  NOT: [AlbumSubscriptionWhereInput!]
+}
+
+input AlbumUpdateInput {
+  name: String
+  artist: ArtistUpdateOneRequiredWithoutAlbumsInput
+  releaseDate: String
+}
+
+input AlbumUpdateManyDataInput {
+  name: String
+  releaseDate: String
+}
+
+input AlbumUpdateManyMutationInput {
+  name: String
+  releaseDate: String
+}
+
+input AlbumUpdateManyWithoutArtistInput {
+  create: [AlbumCreateWithoutArtistInput!]
+  delete: [AlbumWhereUniqueInput!]
+  connect: [AlbumWhereUniqueInput!]
+  set: [AlbumWhereUniqueInput!]
+  disconnect: [AlbumWhereUniqueInput!]
+  update: [AlbumUpdateWithWhereUniqueWithoutArtistInput!]
+  upsert: [AlbumUpsertWithWhereUniqueWithoutArtistInput!]
+  deleteMany: [AlbumScalarWhereInput!]
+  updateMany: [AlbumUpdateManyWithWhereNestedInput!]
+}
+
+input AlbumUpdateManyWithWhereNestedInput {
+  where: AlbumScalarWhereInput!
+  data: AlbumUpdateManyDataInput!
+}
+
+input AlbumUpdateWithoutArtistDataInput {
+  name: String
+  releaseDate: String
+}
+
+input AlbumUpdateWithWhereUniqueWithoutArtistInput {
+  where: AlbumWhereUniqueInput!
+  data: AlbumUpdateWithoutArtistDataInput!
+}
+
+input AlbumUpsertWithWhereUniqueWithoutArtistInput {
+  where: AlbumWhereUniqueInput!
+  update: AlbumUpdateWithoutArtistDataInput!
+  create: AlbumCreateWithoutArtistInput!
+}
+
+input AlbumWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  artist: ArtistWhereInput
+  releaseDate: String
+  releaseDate_not: String
+  releaseDate_in: [String!]
+  releaseDate_not_in: [String!]
+  releaseDate_lt: String
+  releaseDate_lte: String
+  releaseDate_gt: String
+  releaseDate_gte: String
+  releaseDate_contains: String
+  releaseDate_not_contains: String
+  releaseDate_starts_with: String
+  releaseDate_not_starts_with: String
+  releaseDate_ends_with: String
+  releaseDate_not_ends_with: String
+  AND: [AlbumWhereInput!]
+  OR: [AlbumWhereInput!]
+  NOT: [AlbumWhereInput!]
+}
+
+input AlbumWhereUniqueInput {
+  id: ID
+}
+
+type Artist {
+  id: ID!
+  name: String!
+  age: Int!
+  description: String!
+  image: String
+  region: String
+  yearStarted: Int
+  scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
+}
+
+type ArtistConnection {
+  pageInfo: PageInfo!
+  edges: [ArtistEdge]!
+  aggregate: AggregateArtist!
+}
+
+input ArtistCreateInput {
+  name: String!
+  age: Int!
+  description: String!
+  image: String
+  region: String
+  yearStarted: Int
+  scores: ScoreCreateManyWithoutArtistInput
+  albums: AlbumCreateManyWithoutArtistInput
+}
+
+input ArtistCreateManyInput {
+  create: [ArtistCreateInput!]
+  connect: [ArtistWhereUniqueInput!]
+}
+
+input ArtistCreateOneWithoutAlbumsInput {
+  create: ArtistCreateWithoutAlbumsInput
+  connect: ArtistWhereUniqueInput
+}
+
+input ArtistCreateOneWithoutScoresInput {
+  create: ArtistCreateWithoutScoresInput
+  connect: ArtistWhereUniqueInput
+}
+
+input ArtistCreateWithoutAlbumsInput {
+  name: String!
+  age: Int!
+  description: String!
+  image: String
+  region: String
+  yearStarted: Int
+  scores: ScoreCreateManyWithoutArtistInput
+}
+
+input ArtistCreateWithoutScoresInput {
+  name: String!
+  age: Int!
+  description: String!
+  image: String
+  region: String
+  yearStarted: Int
+  albums: AlbumCreateManyWithoutArtistInput
+}
+
+type ArtistEdge {
+  node: Artist!
+  cursor: String!
+}
+
+enum ArtistOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  age_ASC
+  age_DESC
+  description_ASC
+  description_DESC
+  image_ASC
+  image_DESC
+  region_ASC
+  region_DESC
+  yearStarted_ASC
+  yearStarted_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ArtistPreviousValues {
+  id: ID!
+  name: String!
+  age: Int!
+  description: String!
+  image: String
+  region: String
+  yearStarted: Int
+}
+
+input ArtistScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  age: Int
+  age_not: Int
+  age_in: [Int!]
+  age_not_in: [Int!]
+  age_lt: Int
+  age_lte: Int
+  age_gt: Int
+  age_gte: Int
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  region: String
+  region_not: String
+  region_in: [String!]
+  region_not_in: [String!]
+  region_lt: String
+  region_lte: String
+  region_gt: String
+  region_gte: String
+  region_contains: String
+  region_not_contains: String
+  region_starts_with: String
+  region_not_starts_with: String
+  region_ends_with: String
+  region_not_ends_with: String
+  yearStarted: Int
+  yearStarted_not: Int
+  yearStarted_in: [Int!]
+  yearStarted_not_in: [Int!]
+  yearStarted_lt: Int
+  yearStarted_lte: Int
+  yearStarted_gt: Int
+  yearStarted_gte: Int
+  AND: [ArtistScalarWhereInput!]
+  OR: [ArtistScalarWhereInput!]
+  NOT: [ArtistScalarWhereInput!]
+}
+
+type ArtistSubscriptionPayload {
+  mutation: MutationType!
+  node: Artist
+  updatedFields: [String!]
+  previousValues: ArtistPreviousValues
+}
+
+input ArtistSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ArtistWhereInput
+  AND: [ArtistSubscriptionWhereInput!]
+  OR: [ArtistSubscriptionWhereInput!]
+  NOT: [ArtistSubscriptionWhereInput!]
+}
+
+input ArtistUpdateDataInput {
+  name: String
+  age: Int
+  description: String
+  image: String
+  region: String
+  yearStarted: Int
+  scores: ScoreUpdateManyWithoutArtistInput
+  albums: AlbumUpdateManyWithoutArtistInput
+}
+
+input ArtistUpdateInput {
+  name: String
+  age: Int
+  description: String
+  image: String
+  region: String
+  yearStarted: Int
+  scores: ScoreUpdateManyWithoutArtistInput
+  albums: AlbumUpdateManyWithoutArtistInput
+}
+
+input ArtistUpdateManyDataInput {
+  name: String
+  age: Int
+  description: String
+  image: String
+  region: String
+  yearStarted: Int
+}
+
+input ArtistUpdateManyInput {
+  create: [ArtistCreateInput!]
+  update: [ArtistUpdateWithWhereUniqueNestedInput!]
+  upsert: [ArtistUpsertWithWhereUniqueNestedInput!]
+  delete: [ArtistWhereUniqueInput!]
+  connect: [ArtistWhereUniqueInput!]
+  set: [ArtistWhereUniqueInput!]
+  disconnect: [ArtistWhereUniqueInput!]
+  deleteMany: [ArtistScalarWhereInput!]
+  updateMany: [ArtistUpdateManyWithWhereNestedInput!]
+}
+
+input ArtistUpdateManyMutationInput {
+  name: String
+  age: Int
+  description: String
+  image: String
+  region: String
+  yearStarted: Int
+}
+
+input ArtistUpdateManyWithWhereNestedInput {
+  where: ArtistScalarWhereInput!
+  data: ArtistUpdateManyDataInput!
+}
+
+input ArtistUpdateOneRequiredWithoutAlbumsInput {
+  create: ArtistCreateWithoutAlbumsInput
+  update: ArtistUpdateWithoutAlbumsDataInput
+  upsert: ArtistUpsertWithoutAlbumsInput
+  connect: ArtistWhereUniqueInput
+}
+
+input ArtistUpdateOneRequiredWithoutScoresInput {
+  create: ArtistCreateWithoutScoresInput
+  update: ArtistUpdateWithoutScoresDataInput
+  upsert: ArtistUpsertWithoutScoresInput
+  connect: ArtistWhereUniqueInput
+}
+
+input ArtistUpdateWithoutAlbumsDataInput {
+  name: String
+  age: Int
+  description: String
+  image: String
+  region: String
+  yearStarted: Int
+  scores: ScoreUpdateManyWithoutArtistInput
+}
+
+input ArtistUpdateWithoutScoresDataInput {
+  name: String
+  age: Int
+  description: String
+  image: String
+  region: String
+  yearStarted: Int
+  albums: AlbumUpdateManyWithoutArtistInput
+}
+
+input ArtistUpdateWithWhereUniqueNestedInput {
+  where: ArtistWhereUniqueInput!
+  data: ArtistUpdateDataInput!
+}
+
+input ArtistUpsertWithoutAlbumsInput {
+  update: ArtistUpdateWithoutAlbumsDataInput!
+  create: ArtistCreateWithoutAlbumsInput!
+}
+
+input ArtistUpsertWithoutScoresInput {
+  update: ArtistUpdateWithoutScoresDataInput!
+  create: ArtistCreateWithoutScoresInput!
+}
+
+input ArtistUpsertWithWhereUniqueNestedInput {
+  where: ArtistWhereUniqueInput!
+  update: ArtistUpdateDataInput!
+  create: ArtistCreateInput!
+}
+
+input ArtistWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  age: Int
+  age_not: Int
+  age_in: [Int!]
+  age_not_in: [Int!]
+  age_lt: Int
+  age_lte: Int
+  age_gt: Int
+  age_gte: Int
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
+  region: String
+  region_not: String
+  region_in: [String!]
+  region_not_in: [String!]
+  region_lt: String
+  region_lte: String
+  region_gt: String
+  region_gte: String
+  region_contains: String
+  region_not_contains: String
+  region_starts_with: String
+  region_not_starts_with: String
+  region_ends_with: String
+  region_not_ends_with: String
+  yearStarted: Int
+  yearStarted_not: Int
+  yearStarted_in: [Int!]
+  yearStarted_not_in: [Int!]
+  yearStarted_lt: Int
+  yearStarted_lte: Int
+  yearStarted_gt: Int
+  yearStarted_gte: Int
+  scores_every: ScoreWhereInput
+  scores_some: ScoreWhereInput
+  scores_none: ScoreWhereInput
+  albums_every: AlbumWhereInput
+  albums_some: AlbumWhereInput
+  albums_none: AlbumWhereInput
+  AND: [ArtistWhereInput!]
+  OR: [ArtistWhereInput!]
+  NOT: [ArtistWhereInput!]
+}
+
+input ArtistWhereUniqueInput {
+  id: ID
+  name: String
+}
+
+type BatchPayload {
+  count: Long!
+}
+
+scalar Long
+
+type Mutation {
+  createAlbum(data: AlbumCreateInput!): Album!
+  updateAlbum(data: AlbumUpdateInput!, where: AlbumWhereUniqueInput!): Album
+  updateManyAlbums(data: AlbumUpdateManyMutationInput!, where: AlbumWhereInput): BatchPayload!
+  upsertAlbum(where: AlbumWhereUniqueInput!, create: AlbumCreateInput!, update: AlbumUpdateInput!): Album!
+  deleteAlbum(where: AlbumWhereUniqueInput!): Album
+  deleteManyAlbums(where: AlbumWhereInput): BatchPayload!
+  createArtist(data: ArtistCreateInput!): Artist!
+  updateArtist(data: ArtistUpdateInput!, where: ArtistWhereUniqueInput!): Artist
+  updateManyArtists(data: ArtistUpdateManyMutationInput!, where: ArtistWhereInput): BatchPayload!
+  upsertArtist(where: ArtistWhereUniqueInput!, create: ArtistCreateInput!, update: ArtistUpdateInput!): Artist!
+  deleteArtist(where: ArtistWhereUniqueInput!): Artist
+  deleteManyArtists(where: ArtistWhereInput): BatchPayload!
+  createScore(data: ScoreCreateInput!): Score!
+  updateScore(data: ScoreUpdateInput!, where: ScoreWhereUniqueInput!): Score
+  updateManyScores(data: ScoreUpdateManyMutationInput!, where: ScoreWhereInput): BatchPayload!
+  upsertScore(where: ScoreWhereUniqueInput!, create: ScoreCreateInput!, update: ScoreUpdateInput!): Score!
+  deleteScore(where: ScoreWhereUniqueInput!): Score
+  deleteManyScores(where: ScoreWhereInput): BatchPayload!
+  createUser(data: UserCreateInput!): User!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
+  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
+  deleteUser(where: UserWhereUniqueInput!): User
+  deleteManyUsers(where: UserWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+interface Node {
+  id: ID!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  album(where: AlbumWhereUniqueInput!): Album
+  albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album]!
+  albumsConnection(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AlbumConnection!
+  artist(where: ArtistWhereUniqueInput!): Artist
+  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist]!
+  artistsConnection(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ArtistConnection!
+  score(where: ScoreWhereUniqueInput!): Score
+  scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score]!
+  scoresConnection(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ScoreConnection!
+  user(where: UserWhereUniqueInput!): User
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
+  node(id: ID!): Node
+}
+
+type Score {
+  id: ID!
+  category: String!
+  amount: Int!
+  artist: Artist!
+}
+
+type ScoreConnection {
+  pageInfo: PageInfo!
+  edges: [ScoreEdge]!
+  aggregate: AggregateScore!
+}
+
+input ScoreCreateInput {
+  category: String!
+  amount: Int!
+  artist: ArtistCreateOneWithoutScoresInput!
+}
+
+input ScoreCreateManyWithoutArtistInput {
+  create: [ScoreCreateWithoutArtistInput!]
+  connect: [ScoreWhereUniqueInput!]
+}
+
+input ScoreCreateWithoutArtistInput {
+  category: String!
+  amount: Int!
+}
+
+type ScoreEdge {
+  node: Score!
+  cursor: String!
+}
+
+enum ScoreOrderByInput {
+  id_ASC
+  id_DESC
+  category_ASC
+  category_DESC
+  amount_ASC
+  amount_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type ScorePreviousValues {
+  id: ID!
+  category: String!
+  amount: Int!
+}
+
+input ScoreScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  AND: [ScoreScalarWhereInput!]
+  OR: [ScoreScalarWhereInput!]
+  NOT: [ScoreScalarWhereInput!]
+}
+
+type ScoreSubscriptionPayload {
+  mutation: MutationType!
+  node: Score
+  updatedFields: [String!]
+  previousValues: ScorePreviousValues
+}
+
+input ScoreSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: ScoreWhereInput
+  AND: [ScoreSubscriptionWhereInput!]
+  OR: [ScoreSubscriptionWhereInput!]
+  NOT: [ScoreSubscriptionWhereInput!]
+}
+
+input ScoreUpdateInput {
+  category: String
+  amount: Int
+  artist: ArtistUpdateOneRequiredWithoutScoresInput
+}
+
+input ScoreUpdateManyDataInput {
+  category: String
+  amount: Int
+}
+
+input ScoreUpdateManyMutationInput {
+  category: String
+  amount: Int
+}
+
+input ScoreUpdateManyWithoutArtistInput {
+  create: [ScoreCreateWithoutArtistInput!]
+  delete: [ScoreWhereUniqueInput!]
+  connect: [ScoreWhereUniqueInput!]
+  set: [ScoreWhereUniqueInput!]
+  disconnect: [ScoreWhereUniqueInput!]
+  update: [ScoreUpdateWithWhereUniqueWithoutArtistInput!]
+  upsert: [ScoreUpsertWithWhereUniqueWithoutArtistInput!]
+  deleteMany: [ScoreScalarWhereInput!]
+  updateMany: [ScoreUpdateManyWithWhereNestedInput!]
+}
+
+input ScoreUpdateManyWithWhereNestedInput {
+  where: ScoreScalarWhereInput!
+  data: ScoreUpdateManyDataInput!
+}
+
+input ScoreUpdateWithoutArtistDataInput {
+  category: String
+  amount: Int
+}
+
+input ScoreUpdateWithWhereUniqueWithoutArtistInput {
+  where: ScoreWhereUniqueInput!
+  data: ScoreUpdateWithoutArtistDataInput!
+}
+
+input ScoreUpsertWithWhereUniqueWithoutArtistInput {
+  where: ScoreWhereUniqueInput!
+  update: ScoreUpdateWithoutArtistDataInput!
+  create: ScoreCreateWithoutArtistInput!
+}
+
+input ScoreWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  category: String
+  category_not: String
+  category_in: [String!]
+  category_not_in: [String!]
+  category_lt: String
+  category_lte: String
+  category_gt: String
+  category_gte: String
+  category_contains: String
+  category_not_contains: String
+  category_starts_with: String
+  category_not_starts_with: String
+  category_ends_with: String
+  category_not_ends_with: String
+  amount: Int
+  amount_not: Int
+  amount_in: [Int!]
+  amount_not_in: [Int!]
+  amount_lt: Int
+  amount_lte: Int
+  amount_gt: Int
+  amount_gte: Int
+  artist: ArtistWhereInput
+  AND: [ScoreWhereInput!]
+  OR: [ScoreWhereInput!]
+  NOT: [ScoreWhereInput!]
+}
+
+input ScoreWhereUniqueInput {
+  id: ID
+}
+
+type Subscription {
+  album(where: AlbumSubscriptionWhereInput): AlbumSubscriptionPayload
+  artist(where: ArtistSubscriptionWhereInput): ArtistSubscriptionPayload
+  score(where: ScoreSubscriptionWhereInput): ScoreSubscriptionPayload
+  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+  password: String!
+  artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
+}
+
+type UserConnection {
+  pageInfo: PageInfo!
+  edges: [UserEdge]!
+  aggregate: AggregateUser!
+}
+
+input UserCreateInput {
+  email: String!
+  name: String!
+  password: String!
+  artists: ArtistCreateManyInput
+}
+
+type UserEdge {
+  node: User!
+  cursor: String!
+}
+
+enum UserOrderByInput {
+  id_ASC
+  id_DESC
+  email_ASC
+  email_DESC
+  name_ASC
+  name_DESC
+  password_ASC
+  password_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+}
+
+type UserPreviousValues {
+  id: ID!
+  email: String!
+  name: String!
+  password: String!
+}
+
+type UserSubscriptionPayload {
+  mutation: MutationType!
+  node: User
+  updatedFields: [String!]
+  previousValues: UserPreviousValues
+}
+
+input UserSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: UserWhereInput
+  AND: [UserSubscriptionWhereInput!]
+  OR: [UserSubscriptionWhereInput!]
+  NOT: [UserSubscriptionWhereInput!]
+}
+
+input UserUpdateInput {
+  email: String
+  name: String
+  password: String
+  artists: ArtistUpdateManyInput
+}
+
+input UserUpdateManyMutationInput {
+  email: String
+  name: String
+  password: String
+}
+
+input UserWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  artists_every: ArtistWhereInput
+  artists_some: ArtistWhereInput
+  artists_none: ArtistWhereInput
+  AND: [UserWhereInput!]
+  OR: [UserWhereInput!]
+  NOT: [UserWhereInput!]
+}
+
+input UserWhereUniqueInput {
+  id: ID
+  email: String
+}
