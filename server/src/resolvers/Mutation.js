@@ -66,11 +66,13 @@ async function newAlbum(parent, args, context, info) {
 }
 
 async function newScore(parent, args, context, info) {
+
 	return context.db.mutation.createScore({
 		data: {
 			category: args.category,
-			artist: {connect: {name: args.artistName}},
-			amount: args.amount
+			artist: {connect: {name: args.name}},
+			amount: args.amount,
+			user: {connect: {email: args.email}}
 		},
 	}, info)
 
@@ -164,6 +166,8 @@ async function removeTopArtist(parent, args, context, info) {
 
 
 }
+
+
 
 module.exports = {
 	signup,

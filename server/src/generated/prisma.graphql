@@ -731,6 +731,7 @@ type Score {
   category: String!
   amount: Int!
   artist: Artist!
+  user: User
 }
 
 type ScoreConnection {
@@ -743,6 +744,7 @@ input ScoreCreateInput {
   category: String!
   amount: Int!
   artist: ArtistCreateOneWithoutScoresInput!
+  user: UserCreateOneWithoutScoresInput
 }
 
 input ScoreCreateManyWithoutArtistInput {
@@ -750,9 +752,21 @@ input ScoreCreateManyWithoutArtistInput {
   connect: [ScoreWhereUniqueInput!]
 }
 
+input ScoreCreateManyWithoutUserInput {
+  create: [ScoreCreateWithoutUserInput!]
+  connect: [ScoreWhereUniqueInput!]
+}
+
 input ScoreCreateWithoutArtistInput {
   category: String!
   amount: Int!
+  user: UserCreateOneWithoutScoresInput
+}
+
+input ScoreCreateWithoutUserInput {
+  category: String!
+  amount: Int!
+  artist: ArtistCreateOneWithoutScoresInput!
 }
 
 type ScoreEdge {
@@ -843,6 +857,7 @@ input ScoreUpdateInput {
   category: String
   amount: Int
   artist: ArtistUpdateOneRequiredWithoutScoresInput
+  user: UserUpdateOneWithoutScoresInput
 }
 
 input ScoreUpdateManyDataInput {
@@ -867,6 +882,18 @@ input ScoreUpdateManyWithoutArtistInput {
   updateMany: [ScoreUpdateManyWithWhereNestedInput!]
 }
 
+input ScoreUpdateManyWithoutUserInput {
+  create: [ScoreCreateWithoutUserInput!]
+  delete: [ScoreWhereUniqueInput!]
+  connect: [ScoreWhereUniqueInput!]
+  set: [ScoreWhereUniqueInput!]
+  disconnect: [ScoreWhereUniqueInput!]
+  update: [ScoreUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ScoreUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ScoreScalarWhereInput!]
+  updateMany: [ScoreUpdateManyWithWhereNestedInput!]
+}
+
 input ScoreUpdateManyWithWhereNestedInput {
   where: ScoreScalarWhereInput!
   data: ScoreUpdateManyDataInput!
@@ -875,6 +902,13 @@ input ScoreUpdateManyWithWhereNestedInput {
 input ScoreUpdateWithoutArtistDataInput {
   category: String
   amount: Int
+  user: UserUpdateOneWithoutScoresInput
+}
+
+input ScoreUpdateWithoutUserDataInput {
+  category: String
+  amount: Int
+  artist: ArtistUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateWithWhereUniqueWithoutArtistInput {
@@ -882,10 +916,21 @@ input ScoreUpdateWithWhereUniqueWithoutArtistInput {
   data: ScoreUpdateWithoutArtistDataInput!
 }
 
+input ScoreUpdateWithWhereUniqueWithoutUserInput {
+  where: ScoreWhereUniqueInput!
+  data: ScoreUpdateWithoutUserDataInput!
+}
+
 input ScoreUpsertWithWhereUniqueWithoutArtistInput {
   where: ScoreWhereUniqueInput!
   update: ScoreUpdateWithoutArtistDataInput!
   create: ScoreCreateWithoutArtistInput!
+}
+
+input ScoreUpsertWithWhereUniqueWithoutUserInput {
+  where: ScoreWhereUniqueInput!
+  update: ScoreUpdateWithoutUserDataInput!
+  create: ScoreCreateWithoutUserInput!
 }
 
 input ScoreWhereInput {
@@ -926,6 +971,7 @@ input ScoreWhereInput {
   amount_gt: Int
   amount_gte: Int
   artist: ArtistWhereInput
+  user: UserWhereInput
   AND: [ScoreWhereInput!]
   OR: [ScoreWhereInput!]
   NOT: [ScoreWhereInput!]
@@ -948,6 +994,7 @@ type User {
   name: String!
   password: String!
   artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
+  scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
 }
 
 type UserConnection {
@@ -957,6 +1004,19 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  email: String!
+  name: String!
+  password: String!
+  artists: ArtistCreateManyInput
+  scores: ScoreCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutScoresInput {
+  create: UserCreateWithoutScoresInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutScoresInput {
   email: String!
   name: String!
   password: String!
@@ -1013,12 +1073,34 @@ input UserUpdateInput {
   name: String
   password: String
   artists: ArtistUpdateManyInput
+  scores: ScoreUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   name: String
   password: String
+}
+
+input UserUpdateOneWithoutScoresInput {
+  create: UserCreateWithoutScoresInput
+  update: UserUpdateWithoutScoresDataInput
+  upsert: UserUpsertWithoutScoresInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutScoresDataInput {
+  email: String
+  name: String
+  password: String
+  artists: ArtistUpdateManyInput
+}
+
+input UserUpsertWithoutScoresInput {
+  update: UserUpdateWithoutScoresDataInput!
+  create: UserCreateWithoutScoresInput!
 }
 
 input UserWhereInput {
@@ -1081,6 +1163,9 @@ input UserWhereInput {
   artists_every: ArtistWhereInput
   artists_some: ArtistWhereInput
   artists_none: ArtistWhereInput
+  scores_every: ScoreWhereInput
+  scores_some: ScoreWhereInput
+  scores_none: ScoreWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

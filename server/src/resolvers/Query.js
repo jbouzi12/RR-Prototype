@@ -18,10 +18,21 @@ function album(root, args, context, info) {
 	return context.db.query.album({ where: {id: root.album.id}}, info)
 }
 
+function score(root, args, context, info) {
+	return context.db.query.score({ where: {id: root.score.id}}, info)
+}
+
+
+function scores(parent, args, context, info) {
+    return context.db.query.scores({}, info)
+}
+
 module.exports = {
 	artists,
 	users,
 	albums,
 	artist,
-	album
+	album,
+  score,
+  scores
 }

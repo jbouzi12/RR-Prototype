@@ -10,7 +10,7 @@ type Artist {
 	region: String
 	yearStarted: Int
 	scores: [Score!]!
-	albums: [Album!]!			
+	albums: [Album!]!
 }
 
 type User {
@@ -19,6 +19,7 @@ type User {
 	name: String!
 	password: String!
 	artists: [Artist!]!
+	scores: [Score]
 }
 
 
@@ -27,6 +28,7 @@ type Score {
 	category: String!
 	amount: Int!
 	artist: Artist!
+	user: User
 }
 
 type Album {
