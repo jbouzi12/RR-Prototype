@@ -20,6 +20,7 @@ export default class ArtistList extends Component {
 
   static propTypes = {
     navigator: PropTypes.object.isRequired,
+    title: PropTypes.string
   }
 
   pressRow = (artist) => {
@@ -31,31 +32,30 @@ export default class ArtistList extends Component {
         }
       })
     }
-	
+
   render() {
 
-  
+
     return (
     	<Query query={ARTIST_QUERY}>
     		{({ loading, error, data}) => {
     			if(loading) return <Text> Fetching </Text>
-    			if(error) { 
+    			if(error) {
     				return (
     					<Text> Error </Text>
     				)
     			}
 
     			 const artists = data.artists
-           console.log("ARTIST:", data)
     		return (
-    			<View style={styles.container}>{artists.map(artist =>    
+    			<View style={styles.container}>{artists.map(artist =>
             <TouchableHighlight
-              key={artist.id} 
+              key={artist.id}
               onPress={() => this.pressRow(artist)}
               underlayColor="#ddd"
-            > 
-              <Artist 
-                artist={artist} 
+            >
+              <Artist
+                artist={artist}
               />
             </TouchableHighlight>)}
           </View>
