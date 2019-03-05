@@ -10,6 +10,8 @@ import {
   Image
 } from 'react-native';
 
+import { ListItem } from 'react-native-elements'
+
 
 export default class Artist extends Component<Props> {
 
@@ -19,16 +21,18 @@ export default class Artist extends Component<Props> {
 
 
     return (
-	    <View key={id} style={styles.groupContainer}>
-          <Image
-           source={{uri: image ? image : ""}}
-           style={{
-             height: 70,
-             width: 70,
-             borderRadius: 20
-           }}         />
-	        <Text style={styles.groupName}>{name}</Text>
-	    </View>
+      <ListItem
+        key={id}
+        leftAvatar={{ source: {uri: image ? image : ""} }}
+        title={name}
+        titleStyle={{
+          fontWeight: "bold"
+        }}
+        component={TouchableHighlight} 
+        bottomDivider={true}
+        underlayColor="#ddd"
+
+      />
     );
   }
 }

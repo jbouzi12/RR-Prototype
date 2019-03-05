@@ -9,9 +9,10 @@ import {
   View,
   Image
 } from 'react-native';
-import { Slider } from 'react-native-elements';
+import { Slider, Button } from 'react-native-elements';
 
-
+import {  Query, ApolloProvider, graphql, Mutation } from 'react-apollo';
+import gql from 'graphql-tag';
 
 export default class ArtistDetails extends Component<Props> {
 
@@ -42,36 +43,39 @@ export default class ArtistDetails extends Component<Props> {
 	   		 <Image
 		   		source={{uri: artist.image ? artist.image : ""}}
 		   		style={{
-		   			height: 120,
-		   			width: 120,
-		   			borderRadius: 60
+		   			height: 100,
+		   			width: 100,
+		   			borderRadius: 50
 		   		}}
 		   	/>
+        <Button
+          type="outline"
+          title="Follow"
+          style={{
+            height: 40,
+            width: 70,
+          }}
+        />
 	  		<Text
 	  			style={{
 	  				paddingTop: 20,
 	  				paddingBottom: 20,
-	  				fontSize: 40
-	  			}}
-	  		>
-	  			{artist.name}
-	  		</Text>
-	  		<Text
-	  			style={{
-	  				paddingTop: 20,
-	  				paddingBottom: 20,
-	  				fontSize: 20
+	  				fontSize: 15
 	  			}}
 	  		>
 	  			{artist.description}
 	  		</Text>
         <View>
-          <Text>
+          <Text
+            style={{
+              fontWeight: "bold"
+            }}
+          >
             Flow
           </Text>
           <Slider
             value={this.state.flow}
-            onValueChange={flow => this.setState({ flow })}
+            // onValueChange={this.saveValue()}
             maximumValue = {5}
             step={1}
             style={{
@@ -84,7 +88,11 @@ export default class ArtistDetails extends Component<Props> {
           </Text>
         </View>
         <View>
-          <Text>
+          <Text
+            style={{
+              fontWeight: "bold"
+            }}
+          >
             Delivery
           </Text>
           <Slider
@@ -102,7 +110,11 @@ export default class ArtistDetails extends Component<Props> {
           </Text>
         </View>
         <View>
-          <Text>
+          <Text
+            style={{
+              fontWeight: "bold"
+            }}
+          >
             Metaphor
           </Text>
           <Slider
@@ -120,7 +132,11 @@ export default class ArtistDetails extends Component<Props> {
           </Text>
         </View>
         <View>
-          <Text>
+          <Text
+            style={{
+              fontWeight: "bold"
+            }}
+          >
             Adlib
           </Text>
           <Slider
@@ -139,7 +155,11 @@ export default class ArtistDetails extends Component<Props> {
           </Text>
         </View>
         <View>
-          <Text>
+          <Text
+            style={{
+              fontWeight: "bold"
+            }}
+          >
             Beats
           </Text>
           <Slider
@@ -180,3 +200,11 @@ const styles = StyleSheet.create({
     // flex: 0.7,
   },
 });
+
+const NEW_SCORE = gql`
+  mutation newScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
+    score(amount: $amount, category: $category, name: $name, email: $email) {
+      amount
+    }
+  }
+`

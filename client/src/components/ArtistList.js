@@ -25,7 +25,7 @@ export default class ArtistList extends Component {
 
   pressRow = (artist) => {
       this.props.navigator.push({
-        title: "Push Event",
+        title: `${artist.name}`,
         component: ArtistDetails,
         passProps: {
           pushEvent: artist
@@ -55,6 +55,7 @@ export default class ArtistList extends Component {
               underlayColor="#ddd"
             >
               <Artist
+                key={artist.id}
                 artist={artist}
               />
             </TouchableHighlight>)}
@@ -71,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: 'white',
     flex: 1,
-    marginTop: 100
+    marginTop: 90
   }
 });
 
