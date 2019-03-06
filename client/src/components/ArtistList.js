@@ -23,12 +23,13 @@ export default class ArtistList extends Component {
     navigator: PropTypes.object.isRequired,
 }
 
-  pressRow = (artist) => {
+  pressRow = (artist, user) => {
       this.props.navigator.push({
         title: `${artist.name}`,
         component: ArtistDetails,
         passProps: {
-          pushEvent: artist
+          artist: artist,
+          user: user
         }
       })
     }
@@ -38,31 +39,34 @@ export default class ArtistList extends Component {
 
     return (
     	<Query query={ARTIST_QUERY}>
-    		{({ loading, error, data}) => {
-    			if(loading) return <Text> Fetching </Text>
-    			if(error) {
-    				return (
-    					<Text> Error </Text>
-    				)
-    			}
-
-    			 const artists = data.artists
-    		return (
-    			<View style={styles.container}>{artists.map(artist =>
-            <TouchableHighlight
-              key={artist.id}
-              onPress={() => this.pressRow(artist)}
-              underlayColor="#ddd"
-            >
-              <Artist
-                key={artist.id}
-                artist={artist}
-              />
-            </TouchableHighlight>)}
-          </View>
-    		)
-
-    		}}
+        {({ loading: loadingOne, error: errorOne, data: {artists}  }) => (
+        <Query query={USER_QUERY}>
+          {({ loading: loadingTwo, error: errorTwo, data: {user} }) => {
+            console.log("DATA:", artists, user)
+            if (loadingOne || loadingTwo) return <Text>loading...</Text>
+            if(errorOne || errorTwo) {
+              console.log("ERRORONE:", errorOne, "ERORTWO:", errorTwo)
+      				return (
+      					<Text> Error </Text>
+      				)
+      			}
+         return (
+           <View style={styles.container}>{artists.map(artist =>
+             <TouchableHighlight
+               key={artist.id}
+               onPress={() => this.pressRow(artist, user)}
+               underlayColor="#ddd"
+             >
+               <Artist
+                 key={artist.id}
+                 artist={artist}
+               />
+             </TouchableHighlight>)}
+           </View>
+          )
+        }}
+        </Query>
+        )}
     	</Query>
     )
   }
@@ -91,5 +95,13 @@ const ARTIST_QUERY = gql`
         }
       }
 		}
+	}
+`
+
+const USER_QUERY = gql`
+	{
+    user {
+     name
+   }
 	}
 `

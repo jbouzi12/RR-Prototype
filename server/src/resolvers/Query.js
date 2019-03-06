@@ -1,3 +1,5 @@
+const {getUserId} = require('../utils')
+
 function artists(parent, args, context, info) {
     return context.db.query.artists({}, info)
 }
@@ -27,6 +29,11 @@ function scores(parent, args, context, info) {
     return context.db.query.scores({}, info)
 }
 
+function user(parent, args, context, info) {
+    const userId = getUserId(context)
+    return context.db.query.user({where: {id: userId}}, info)
+}
+
 module.exports = {
 	artists,
 	users,
@@ -34,5 +41,6 @@ module.exports = {
 	artist,
 	album,
   score,
-  scores
+  scores,
+  user
 }

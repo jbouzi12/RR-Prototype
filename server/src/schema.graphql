@@ -8,6 +8,7 @@ type Query {
 	artist: Artist!
 	album: Album!
 	score: Score!
+	user: User
 }
 
 
