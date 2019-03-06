@@ -88,7 +88,8 @@ export default class ArtistDetails extends Component<Props> {
 
   render() {
   	let artist = this.props.artist,
-  		image = ""
+  		image = "",
+      user = this.props.user
   	;
     console.log("USER:", user)
 

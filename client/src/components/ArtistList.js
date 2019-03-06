@@ -101,7 +101,18 @@ const ARTIST_QUERY = gql`
 const USER_QUERY = gql`
 	{
     user {
-     name
-   }
+      name
+      email
+      scores {
+        amount
+        user {
+          name
+          email
+        }
+        artist {
+          name
+        }
+      }
+    }
 	}
 `
