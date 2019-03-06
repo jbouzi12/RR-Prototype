@@ -52,7 +52,6 @@ export default class ArtistDetails extends Component<Props> {
   renderScores = () => {
 
     return scores.map((score, index) => {
-      console.log("STATE:", this.state[`${score.name}`], `${score.name}`)
       return (
         <View
           key={index}
@@ -91,7 +90,6 @@ export default class ArtistDetails extends Component<Props> {
   		image = "",
       user = this.props.user
   	;
-    console.log("USER:", user)
 
     return (
 	   <View
