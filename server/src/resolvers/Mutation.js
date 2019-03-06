@@ -78,6 +78,21 @@ async function newScore(parent, args, context, info) {
 
 }
 
+async function updateScore(parent, args, context, info) {
+
+	return context.db.mutation.createScore({
+		data: {
+			amount: args.amount
+		},
+		where: {
+			user: {connect: {email: args.email}},
+			category: args.category,
+			artist: {connect: {name: args.name}},
+		}
+	}, info)
+
+}
+
 async function updateArtist(parent, args, context, info) {
 
 	return context.db.mutation.updateArtist({
@@ -177,5 +192,6 @@ module.exports = {
 	newScore,
 	updateArtist,
 	addTopArtist,
-	removeTopArtist
+	removeTopArtist,
+	updateScore
 }

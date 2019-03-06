@@ -28,7 +28,7 @@ export default class Artist extends Component<Props> {
         titleStyle={{
           fontWeight: "bold"
         }}
-        component={TouchableHighlight} 
+        component={TouchableHighlight}
         bottomDivider={true}
         underlayColor="#ddd"
 

@@ -14,22 +14,82 @@ import { Slider, Button } from 'react-native-elements';
 import {  Query, ApolloProvider, graphql, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
+
+let scores = [
+    {
+      color: "#e01e79",
+      name: "Flow"
+    },
+    {
+      color: "#a12b36",
+      name: "Delivery"
+    },
+    {
+      color: "#60f17c",
+      name: "Metaphor"
+    },
+    {
+      color: "#6b7155",
+      name: "Adlib"
+    },
+    {
+      color: "#8aa6e0",
+      name: "Beats"
+    }
+  ]
+;
 export default class ArtistDetails extends Component<Props> {
 
-    state = {
-      flow: 1,
-      delivery: 1,
-      metaphor: 1,
-      adlib: 1,
-      beats: 1
-    }
+  state = {
+    flow: 1,
+    delivery: 1,
+    metaphor: 1,
+    adlib: 1,
+    beats: 1
+  }
+
+
+  renderScores = () => {
+
+    return scores.map((score, index) => {
+      console.log("STATE:", this.state[`${score.name}`], `${score.name}`)
+      return (
+        <View
+          key={index}
+          style={{
+            marginBottom: 20
+          }}
+        >
+          <Text
+            style={{
+              fontWeight: "bold",
+              color: `${score.color}`
+            }}
+          >
+            {score.name}
+          </Text>
+          <Slider
+            value={this.state[`${score.name.toLowerCase()}`]}
+            // onValueChange={this.saveValue()}
+            maximumValue = {5}
+            step={1}
+            style={{
+              width: 200
+            }}
+            thumbTintColor= {score.color}
+          />
+          <Text>Value:
+          {this.state[`${score.name.toLowerCase()}`]}
+          </Text>
+        </View>
+      )
+    })
+  }
 
   render() {
   	let artist = this.props.pushEvent,
   		image = ""
   	;
-
-
 
     return (
 	   <View
@@ -40,6 +100,7 @@ export default class ArtistDetails extends Component<Props> {
 		   		alignItems: 'center'
 	   		}}
 	   >
+      <View>
 	   		 <Image
 		   		source={{uri: artist.image ? artist.image : ""}}
 		   		style={{
@@ -65,117 +126,10 @@ export default class ArtistDetails extends Component<Props> {
 	  		>
 	  			{artist.description}
 	  		</Text>
-        <View>
-          <Text
-            style={{
-              fontWeight: "bold"
-            }}
-          >
-            Flow
-          </Text>
-          <Slider
-            value={this.state.flow}
-            // onValueChange={this.saveValue()}
-            maximumValue = {5}
-            step={1}
-            style={{
-              width: 200
-            }}
-            thumbTintColor= "#e01e79"
-          />
-          <Text>Value:
-          {this.state.flow}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontWeight: "bold"
-            }}
-          >
-            Delivery
-          </Text>
-          <Slider
-            value={this.state.delivery}
-            onValueChange={delivery => this.setState({ delivery })}
-            maximumValue = {5}
-            step={1}
-            style={{
-              width: 200
-            }}
-            thumbTintColor= "#a12b36"
-          />
-          <Text>Value:
-          {this.state.delivery}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontWeight: "bold"
-            }}
-          >
-            Metaphor
-          </Text>
-          <Slider
-            value={this.state.metaphor}
-            onValueChange={metaphor => this.setState({ metaphor })}
-            maximumValue = {5}
-            step={1}
-            style={{
-              width: 200
-            }}
-            thumbTintColor= "#60f17c"
-          />
-          <Text>Value:
-          {this.state.metaphor}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontWeight: "bold"
-            }}
-          >
-            Adlib
-          </Text>
-          <Slider
-            value={this.state.adlib}
-            onValueChange={adlib => this.setState({ adlib })}
-            maximumValue = {5}
-            step={1}
-            style={{
-              width: 200
-            }}
-            thumbTintColor= "#6b7155"
-
-          />
-          <Text>Value:
-          {this.state.adlib}
-          </Text>
-        </View>
-        <View>
-          <Text
-            style={{
-              fontWeight: "bold"
-            }}
-          >
-            Beats
-          </Text>
-          <Slider
-            value={this.state.beats}
-            onValueChange={beats => this.setState({ beats })}
-            maximumValue = {5}
-            thumbTintColor= "#8aa6e0"
-            step={1}
-            style={{
-              width: 200
-            }}
-          />
-          <Text>Value:
-          {this.state.beats}
-          </Text>
-        </View>
+      </View>
+      <View>
+        {this.renderScores()}
+      </View>
 	   </View>
     );
   }
@@ -203,6 +157,14 @@ const styles = StyleSheet.create({
 
 const NEW_SCORE = gql`
   mutation newScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
+    score(amount: $amount, category: $category, name: $name, email: $email) {
+      amount
+    }
+  }
+`
+
+const UPDATE_SCORE = gql`
+  mutation updateScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
     score(amount: $amount, category: $category, name: $name, email: $email) {
       amount
     }
