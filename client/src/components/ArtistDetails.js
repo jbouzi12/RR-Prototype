@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Slider, Button } from 'react-native-elements';
 
-import {  Query, ApolloProvider, graphql, Mutation } from 'react-apollo';
+import { ApolloProvider, graphql, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
@@ -45,42 +45,63 @@ export default class ArtistDetails extends Component<Props> {
     delivery: 1,
     metaphor: 1,
     adlib: 1,
-    beats: 1
+    beats: 1,
+    amount: 1,
+    category: ""
   }
 
 
   renderScores = () => {
 
+
     return scores.map((score, index) => {
       return (
-        <View
-          key={index}
-          style={{
-            marginBottom: 20
-          }}
-        >
-          <Text
+        <ApolloProvider>
+          <View
+            key={index}
             style={{
-              fontWeight: "bold",
-              color: `${score.color}`
+              marginBottom: 20
             }}
           >
-            {score.name}
-          </Text>
-          <Slider
-            value={this.state[`${score.name.toLowerCase()}`]}
-            // onValueChange={this.saveValue()}
-            maximumValue = {5}
-            step={1}
-            style={{
-              width: 200
-            }}
-            thumbTintColor= {score.color}
-          />
-          <Text>Value:
-          {this.state[`${score.name.toLowerCase()}`]}
-          </Text>
-        </View>
+            <Text
+              style={{
+                fontWeight: "bold",
+                color: `${score.color}`
+              }}
+            >
+              {score.name}
+            </Text>
+            <Mutation mutation={NEW_SCORE} >
+              {newScoreMutation => (
+                <Slider
+                  value={this.state[`${score.name.toLowerCase()}`]}
+                  onValueChange={(value) => {
+                    newScoreMutation({
+                      variables: {
+                        amount: value,
+                        category: score.name,
+                        name: this.props.artist.name,
+                        email: this.props.user && this.props.user.email ? this.props.user.email : null
+                      }
+                    })
+                      .then(res => res)
+                      .catch(err => <Text>{err}</Text>);
+                      this.setState({amount: 1, category: ""})
+                  }}
+                  maximumValue = {5}
+                  step={1}
+                  style={{
+                    width: 200
+                  }}
+                  thumbTintColor= {score.color}
+                />
+              )}
+            </Mutation>
+            <Text>Value:
+            {this.state[`${score.name.toLowerCase()}`]}
+            </Text>
+          </View>
+        </ApolloProvider>
       )
     })
   }
