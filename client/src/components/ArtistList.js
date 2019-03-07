@@ -20,9 +20,13 @@ import gql from 'graphql-tag';
 export default class ArtistList extends Component {
 
   static propTypes = {
-    // title: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
     navigator: PropTypes.object.isRequired,
-}
+  }
+
+  state = {
+    currentArtist: {}
+  }
 
   pressRow = (artist, user) => {
     this.props.navigator.push({
@@ -33,21 +37,29 @@ export default class ArtistList extends Component {
         user: user
       }
     })
+    this.setState({
+      currentArtist: {}
+    })
   }
 
   renderTopArtists = (artists) => {
     console.log("ARTISTS:", artists)
     return artists.map((artist, index) => {
       return (
-        <Image
+        <TouchableHighlight
           key={index}
-         source={{uri: artist.image ? artist.image : ""}}
-         style={{
-           height: 30,
-           width: 30,
-           borderRadius: 15
-         }}
-       />
+          onPress={() => this.setState({currentArtist: artist})}
+          underlayColor="#ddd"
+        >
+          <Image
+           source={{uri: artist.image ? artist.image : ""}}
+           style={{
+             height: 26,
+             width: 26,
+             borderRadius: 13
+           }}
+         />
+       </TouchableHighlight >
       )
     })
   }
@@ -88,6 +100,19 @@ export default class ArtistList extends Component {
                 {user.name}
                </Text>
                {this.renderTopArtists(userArtists)}
+               <TouchableHighlight
+                 onPress={() => this.pressRow(this.state.currentArtist, user)}
+                 underlayColor="#ddd"
+               >
+                 <Text
+                  style={{
+                    fontWeight: "bold",
+                    margin: 10
+                  }}
+                 >
+                  {this.state.currentArtist && this.state.currentArtist.name ? this.state.currentArtist.name : ""}
+                 </Text>
+                </TouchableHighlight>
              </View>
              {artists.map(artist =>
              <TouchableHighlight
@@ -142,7 +167,17 @@ const USER_QUERY = gql`
       name
       email
       artists {
+        id
+        name
+        description
         image
+        scores {
+          amount
+          category
+          user {
+            email
+          }
+        }
       }
       scores {
         amount
@@ -151,6 +186,7 @@ const USER_QUERY = gql`
           email
         }
         artist {
+          id
           name
         }
       }
