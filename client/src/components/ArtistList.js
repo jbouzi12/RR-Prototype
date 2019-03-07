@@ -7,6 +7,7 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Image
 } from 'react-native';
 
 import Artist from './Artist';
@@ -24,16 +25,32 @@ export default class ArtistList extends Component {
 }
 
   pressRow = (artist, user) => {
-      this.props.navigator.push({
-        title: `${artist.name}`,
-        component: ArtistDetails,
-        passProps: {
-          artist: artist,
-          user: user,
-          client: this.props.client
-        }
-      })
-    }
+    this.props.navigator.push({
+      title: `${artist.name}`,
+      component: ArtistDetails,
+      passProps: {
+        artist: artist,
+        user: user
+      }
+    })
+  }
+
+  renderTopArtists = (artists) => {
+    console.log("ARTISTS:", artists)
+    return artists.map((artist, index) => {
+      return (
+        <Image
+          key={index}
+         source={{uri: artist.image ? artist.image : ""}}
+         style={{
+           height: 30,
+           width: 30,
+           borderRadius: 15
+         }}
+       />
+      )
+    })
+  }
 
   render() {
 
@@ -51,8 +68,28 @@ export default class ArtistList extends Component {
       					<Text> Error </Text>
       				)
       			}
+          let userArtists = user.artists;
+
          return (
-           <View style={styles.container}>{artists.map(artist =>
+           <View style={styles.container}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+               <Text
+                style={{
+                  fontWeight: "bold",
+                  margin: 10
+                }}
+               >
+                {user.name}
+               </Text>
+               {this.renderTopArtists(userArtists)}
+             </View>
+             {artists.map(artist =>
              <TouchableHighlight
                key={artist.id}
                onPress={() => this.pressRow(artist, user)}
@@ -104,6 +141,9 @@ const USER_QUERY = gql`
     user {
       name
       email
+      artists {
+        image
+      }
       scores {
         amount
         user {

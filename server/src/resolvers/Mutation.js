@@ -200,8 +200,9 @@ async function removeTopArtist(parent, args, context, info) {
 
 }
 async function updateTopArtist(parent, args, context, info) {
-	let currentUser = await context.db.query.user({where: {id: args.email}})
+	let currentUser = await context.db.query.user({where: {email: args.email}})
 
+	console.log("CURRNT USER:", currentUser)
 
 	// return context.db.mutation.updateUser({
 	// 	data: {
