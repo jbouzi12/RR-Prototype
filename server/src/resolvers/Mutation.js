@@ -93,6 +93,25 @@ async function updateScore(parent, args, context, info) {
 
 }
 
+async function upsertScore(parent, args, context, info) {
+
+	return context.db.mutation.upsertScore({
+		create: {
+			user: {connect: {email: args.email}},
+			category: args.category,
+			artist: {connect: {name: args.name}},
+			amount: args.amount
+		},
+		where: {
+			id: args.id
+		},
+		update: {
+			amount: args.amount
+		}
+	}, info)
+
+}
+
 async function updateArtist(parent, args, context, info) {
 
 	return context.db.mutation.updateArtist({
@@ -179,6 +198,21 @@ async function removeTopArtist(parent, args, context, info) {
 			},
 		}, info)
 
+}
+async function updateTopArtist(parent, args, context, info) {
+	let currentUser = await context.db.query.user({where: {id: args.email}})
+
+
+	// return context.db.mutation.updateUser({
+	// 	data: {
+	// 		artists: {
+	// 			connect: {id: args.id}
+	// 		}
+	// 	},
+	// 	where: {
+	// 		email: args.email
+	// 	},
+	// }, info)
 
 }
 
@@ -193,5 +227,7 @@ module.exports = {
 	updateArtist,
 	addTopArtist,
 	removeTopArtist,
-	updateScore
+	updateScore,
+	upsertScore,
+	updateTopArtist
 }

@@ -29,7 +29,8 @@ export default class ArtistList extends Component {
         component: ArtistDetails,
         passProps: {
           artist: artist,
-          user: user
+          user: user,
+          client: this.props.client
         }
       })
     }

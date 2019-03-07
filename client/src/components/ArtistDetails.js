@@ -36,8 +36,11 @@ let scores = [
       color: "#8aa6e0",
       name: "Beats"
     }
+
   ]
 ;
+
+
 export default class ArtistDetails extends Component<Props> {
 
   state = {
@@ -45,9 +48,7 @@ export default class ArtistDetails extends Component<Props> {
     delivery: 1,
     metaphor: 1,
     adlib: 1,
-    beats: 1,
-    amount: 1,
-    category: ""
+    beats: 1
   }
 
 
@@ -56,7 +57,6 @@ export default class ArtistDetails extends Component<Props> {
 
     return scores.map((score, index) => {
       return (
-        <ApolloProvider>
           <View
             key={index}
             style={{
@@ -76,6 +76,7 @@ export default class ArtistDetails extends Component<Props> {
                 <Slider
                   value={this.state[`${score.name.toLowerCase()}`]}
                   onValueChange={(value) => {
+                    console.log("VALUE:", value)
                     newScoreMutation({
                       variables: {
                         amount: value,
@@ -86,7 +87,6 @@ export default class ArtistDetails extends Component<Props> {
                     })
                       .then(res => res)
                       .catch(err => <Text>{err}</Text>);
-                      this.setState({amount: 1, category: ""})
                   }}
                   maximumValue = {5}
                   step={1}
@@ -101,7 +101,6 @@ export default class ArtistDetails extends Component<Props> {
             {this.state[`${score.name.toLowerCase()}`]}
             </Text>
           </View>
-        </ApolloProvider>
       )
     })
   }
@@ -187,6 +186,14 @@ const NEW_SCORE = gql`
 const UPDATE_SCORE = gql`
   mutation updateScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
     score(amount: $amount, category: $category, name: $name, email: $email) {
+      amount
+    }
+  }
+`
+
+const SCORE_QUERY = gql`
+  query scores($name: String!, $email: String!) {
+    score(name: $name, email: $email) {
       amount
     }
   }
