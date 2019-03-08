@@ -9,6 +9,7 @@ type Query {
 	album: Album!
 	score: Score!
 	user: User
+	searchArtists(filter: String!): [Artist]
 }
 
 

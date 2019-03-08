@@ -4,6 +4,19 @@ function artists(parent, args, context, info) {
     return context.db.query.artists({}, info)
 }
 
+ function searchArtists(parent, args, ctx, info) {
+  const { filter } = args // destructure input arguments
+  const where = filter
+    ? { OR: [{ name_contains: filter }] }
+    : {}
+
+  let aritstQuery = filter && filter.length > 0 ? {where} : {}
+
+  return ctx.db.query.artists({ where })
+
+}
+
+
 function users(parent, args, context, info) {
     return context.db.query.users({}, info)
 }
@@ -42,5 +55,6 @@ module.exports = {
 	album,
   score,
   scores,
-  user
+  user,
+  searchArtists
 }
