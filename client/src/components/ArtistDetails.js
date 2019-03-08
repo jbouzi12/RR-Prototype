@@ -17,23 +17,18 @@ import gql from 'graphql-tag';
 
 let scores = [
     {
-      color: "#e01e79",
       name: "Flow"
     },
     {
-      color: "#a12b36",
       name: "Delivery"
     },
     {
-      color: "#60f17c",
       name: "Metaphor"
     },
     {
-      color: "#6b7155",
       name: "Adlib"
     },
     {
-      color: "#8aa6e0",
       name: "Beats"
     }
 
@@ -66,7 +61,7 @@ export default class ArtistDetails extends Component<Props> {
             <Text
               style={{
                 fontWeight: "bold",
-                color: `${score.color}`
+                color: "ddd"
               }}
             >
               {score.name}
@@ -76,7 +71,6 @@ export default class ArtistDetails extends Component<Props> {
                 <Slider
                   value={this.state[`${score.name.toLowerCase()}`]}
                   onValueChange={(value) => {
-                    console.log("VALUE:", value)
                     newScoreMutation({
                       variables: {
                         amount: value,
@@ -97,7 +91,8 @@ export default class ArtistDetails extends Component<Props> {
                   style={{
                     width: 200
                   }}
-                  thumbTintColor= {score.color}
+                  minimumTrackTintColor="#FF365D"
+                  thumbTintColor= "#ddd"
                 />
               )}
             </Mutation>
@@ -137,8 +132,14 @@ export default class ArtistDetails extends Component<Props> {
           type="outline"
           title="Follow"
           style={{
-            height: 40,
             width: 70,
+            color: "#FF365D",
+            backgroundColor: "#FF365D"
+
+          }}
+          buttonStyle={{
+            color: "#FF365D",
+            backgroundColor: "#FF365D"
           }}
         />
 	  		<Text

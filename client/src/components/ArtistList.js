@@ -7,7 +7,8 @@ import {
   Text,
   TouchableHighlight,
   View,
-  Image
+  Image,
+  TextInput
 } from 'react-native';
 
 
@@ -16,10 +17,10 @@ import Artist from './Artist';
 import ArtistDetails from './ArtistDetails';
 
 
-import { Query } from 'react-apollo';
+import { Query, withApollo } from 'react-apollo';
 import gql from 'graphql-tag';
 
-export default class ArtistList extends Component {
+class ArtistList extends Component<Props> {
 
   static propTypes = {
     title: PropTypes.string.isRequired,
@@ -27,7 +28,8 @@ export default class ArtistList extends Component {
   }
 
   state = {
-    currentArtist: {}
+    currentArtist: {},
+    artists: []
   }
 
   pressRow = (artist, user) => {
@@ -40,7 +42,7 @@ export default class ArtistList extends Component {
       }
     })
     this.setState({
-      currentArtist: {}
+      currentArtist: {},
     })
   }
 
@@ -49,7 +51,7 @@ export default class ArtistList extends Component {
       return (
         <TouchableHighlight
           key={index}
-          onPress={() => this.setState({currentArtist: artist})}
+          onPress={() => this.setState({currentArtist: this.state.currentArtist ? "" : artist})}
           underlayColor="#ddd"
         >
           <Image
@@ -76,8 +78,18 @@ export default class ArtistList extends Component {
     }
   }
 
-  render() {
+  executeSearch = async (filter) => {
 
+  const result = await this.props.client.query({
+    query: ARTIST_SEARCH_QUERY,
+    variables: { filter },
+  })
+    const artists = result.data.artists.links
+    this.setState({ artists })
+  }
+
+  render() {
+    console.log("CLIENT:", this.props.client)
 
     return (
     	<Query query={ARTIST_QUERY}>
@@ -119,12 +131,25 @@ export default class ArtistList extends Component {
                  <Text
                   style={{
                     fontWeight: "bold",
-                    margin: 10
+                    margin: 10,
+                    color: "#FF365D"
                   }}
                  >
                   {this.state.currentArtist && this.state.currentArtist.name ? this.state.currentArtist.name : ""}
                  </Text>
                 </TouchableHighlight>
+
+             </View>
+             <View
+              style={{
+                margin: 10,
+                marginBottom: 20
+              }}
+             >
+              <TextInput
+                placeholder="Search Artist"
+                onChangeText={(text) => this.executeSearch(text)}
+               />
              </View>
              {artists.map(artist =>
              <TouchableHighlight
@@ -139,6 +164,16 @@ export default class ArtistList extends Component {
                  includesArtist={this.checkTopArtists(artist, user.artists)}
                />
              </TouchableHighlight>)}
+             {this.state.artists.map((artist, index) => {
+
+                 return (<Artist
+                   key={artist.id}
+                   artist={artist}
+                   user={user}
+                   includesArtist={this.checkTopArtists(artist, user.artists)}
+                 />
+               )
+             })}
            </View>
           )
         }}
@@ -156,6 +191,25 @@ const styles = StyleSheet.create({
     marginTop: 90
   }
 });
+
+const ARTIST_SEARCH_QUERY = gql`
+  query ArtistSearchQuery($filter: String!) {
+		artists(filter: $filter) {
+			id
+			name
+			description
+      image
+      scores {
+        amount
+        category
+        user {
+          email
+        }
+      }
+		}
+	}
+`
+
 
 const ARTIST_QUERY = gql`
 	{
@@ -207,3 +261,5 @@ const USER_QUERY = gql`
     }
 	}
 `
+
+export default withApollo(ArtistList)

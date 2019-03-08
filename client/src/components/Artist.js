@@ -12,11 +12,11 @@ import {
 
 import { ListItem, ButtonGroup } from 'react-native-elements'
 import gql from 'graphql-tag';
-import { graphql, Mutation } from 'react-apollo';
+import { graphql, Mutation, withApollo } from 'react-apollo';
 
 
 
-export default class Artist extends Component {
+ class Artist extends Component {
 
 
   render() {
@@ -40,6 +40,9 @@ export default class Artist extends Component {
             underlayColor="#ddd"
             buttonGroup = {{
               buttons: [followButton],
+              textStyle: {
+                color: "#FF365D"
+              },
               onPress: () => updateTopArtistsMutation({
                 variables: {
                   id: id,
@@ -112,3 +115,5 @@ const REMOVE_TOP_ARTIST = gql`
     }
   }
 `
+
+export default withApollo(Artist)

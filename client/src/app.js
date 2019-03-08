@@ -5,7 +5,9 @@ import {
   StyleSheet,
   Text,
   View,
-  NavigatorIOS
+  NavigatorIOS,
+  TouchableHighlight,
+  Image
 } from 'react-native';
 import ArtistList from './components/ArtistList'
 // import './styles/index.css'
@@ -15,6 +17,8 @@ import {ApolloProvider} from 'react-apollo'
 import {createHttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 
 const instructions = Platform.select({
@@ -51,15 +55,53 @@ const client = new ApolloClient({
 })
 
 export default class App extends Component<Props> {
+
+  state = {
+    currentArtist: {},
+    artists: []
+  }
+
+  renderTopArtists = (artists) => {
+    return artists.map((artist, index) => {
+      return (
+        <TouchableHighlight
+          key={index}
+          onPress={() => this.setState({currentArtist: this.state.currentArtist ? "" : artist})}
+          underlayColor="#ddd"
+        >
+          <Image
+           source={{uri: artist.image ? artist.image : ""}}
+           style={{
+             height: 26,
+             width: 26,
+             borderRadius: 13
+           }}
+         />
+       </TouchableHighlight >
+      )
+    })
+  }
+
+
   render() {
     return (
     <ApolloProvider client={client}>
+
 	     <NavigatorIOS
 	     	style={{flex:1}}
-	     	initialRoute={{component: ArtistList,
-	     		title: 'Artists'}}
-	     	/>
-	 </ApolloProvider>
+        barTintColor='#fff'
+        titleTextColor='#FF365D'
+        tintColor='#FF365D'
+	     	initialRoute={{
+          component: ArtistList,
+	     		title: 'Artists',
+          // header: {
+          //  style: {{ backgroundColor: '#fff' }},
+          //  titleStyle: {{ color: '#FF365D' }},
+          // }
+        }}
+  	   />
+	   </ApolloProvider>
     );
   }
 }
@@ -84,3 +126,36 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+const USER_QUERY = gql`
+	{
+    user {
+      name
+      email
+      artists {
+        id
+        name
+        description
+        image
+        scores {
+          amount
+          category
+          user {
+            email
+          }
+        }
+      }
+      scores {
+        amount
+        user {
+          name
+          email
+        }
+        artist {
+          id
+          name
+        }
+      }
+    }
+	}
+`
