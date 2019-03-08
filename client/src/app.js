@@ -1,3 +1,4 @@
+import {ApolloClient} from 'apollo-client'
 import React, { Component } from 'react';
 import {
   Platform,
@@ -11,7 +12,6 @@ import ArtistList from './components/ArtistList'
 // import App from './components/App'
 // import registerServiceWorker from './registerServiceWorker'
 import {ApolloProvider} from 'react-apollo'
-import {ApolloClient} from 'apollo-client'
 import {createHttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
 import { setContext } from 'apollo-link-context';
@@ -43,7 +43,11 @@ const authLink = setContext((_, { headers }) => {
 
 const client = new ApolloClient({
 	link: authLink.concat(httpLink),
-	cache: new InMemoryCache()
+	cache: new InMemoryCache(),
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log('graphQLErrors', graphQLErrors)
+    console.log('networkError', networkError)
+  }
 })
 
 export default class App extends Component<Props> {

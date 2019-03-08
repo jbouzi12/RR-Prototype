@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { Slider, Button } from 'react-native-elements';
 
-import { ApolloProvider, graphql, Mutation } from 'react-apollo';
+import { graphql, Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
 
@@ -85,8 +85,12 @@ export default class ArtistDetails extends Component<Props> {
                         email: this.props.user && this.props.user.email ? this.props.user.email : null
                       }
                     })
-                      .then(res => res)
-                      .catch(err => <Text>{err}</Text>);
+                    .then(({ data }) => {
+                      console.log('got data', data);
+                    })
+                    .catch((error) => {
+                      console.log('there was an error sending the query', error);
+                    })
                   }}
                   maximumValue = {5}
                   step={1}

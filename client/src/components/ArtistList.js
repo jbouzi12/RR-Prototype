@@ -10,6 +10,8 @@ import {
   Image
 } from 'react-native';
 
+
+
 import Artist from './Artist';
 import ArtistDetails from './ArtistDetails';
 
@@ -43,7 +45,6 @@ export default class ArtistList extends Component {
   }
 
   renderTopArtists = (artists) => {
-    console.log("ARTISTS:", artists)
     return artists.map((artist, index) => {
       return (
         <TouchableHighlight
@@ -62,6 +63,17 @@ export default class ArtistList extends Component {
        </TouchableHighlight >
       )
     })
+  }
+
+  checkTopArtists = (artist, topArtists) => {
+
+    for(i = 0; i < topArtists.length; i++) {
+      if(artist.name == topArtists[i].name) {
+        return true
+      } else {
+        return false
+      }
+    }
   }
 
   render() {
@@ -123,6 +135,8 @@ export default class ArtistList extends Component {
                <Artist
                  key={artist.id}
                  artist={artist}
+                 user={user}
+                 includesArtist={this.checkTopArtists(artist, user.artists)}
                />
              </TouchableHighlight>)}
            </View>
