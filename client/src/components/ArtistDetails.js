@@ -143,8 +143,7 @@ export default class ArtistDetails extends Component<Props> {
 		   		style={{
 		   			height: 80,
 		   			width: 80,
-		   			borderRadius: 40,
-            marginLeft: 20
+		   			borderRadius: 40
 		   		}}
 		   	/>
         <Button
@@ -154,8 +153,7 @@ export default class ArtistDetails extends Component<Props> {
             marginTop:10
           }}
           buttonStyle={{
-            backgroundColor:"#FF365D",
-            fontSize: 10
+            backgroundColor:"#FF365D"
           }}
         />
 	  		<Text

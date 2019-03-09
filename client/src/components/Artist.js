@@ -27,7 +27,7 @@ import { graphql, Mutation, withApollo } from 'react-apollo';
 
     return (
       <Mutation mutation={this.props.includesArtist ? REMOVE_TOP_ARTIST : ADD_TOP_ARTIST}>
-        {updateTopArtistsMutation => (
+        {(updateTopArtistsMutation, { loading, error, data }) => (
           <ListItem
             key={id}
             leftAvatar={{ source: {uri: image ? image : ""} }}
@@ -50,8 +50,8 @@ import { graphql, Mutation, withApollo } from 'react-apollo';
                   email: this.props.user && this.props.user.email ? this.props.user.email : null
                 }
               })
-              .then(({ data }) => {
-                console.log('got data', data);
+              .then((res) => {
+                console.log("RESPONSE:", res)
               })
               .catch((error) => {
                 console.log('there was an error sending the query', error);
@@ -93,11 +93,35 @@ const ADD_TOP_ARTIST = gql`
   mutation addTopArtist($id: ID!, $email: String!) {
     user(id: $id, email: $email) {
       id
+      name
       email
       artists {
-        image
-        name
         id
+        name
+        description
+        image
+        scores {
+          id
+          amount
+          category
+          user {
+            id
+            email
+          }
+        }
+      }
+      scores {
+        id
+        amount
+        user {
+          id
+          name
+          email
+        }
+        artist {
+          id
+          name
+        }
       }
     }
   }
@@ -107,14 +131,70 @@ const REMOVE_TOP_ARTIST = gql`
   mutation removeTopArtist($id: ID!, $email: String!) {
     user(id: $id, email: $email) {
       id
+      name
       email
       artists {
-        image
-        name
         id
+        name
+        description
+        image
+        scores {
+          id
+          amount
+          category
+          user {
+            id
+            email
+          }
+        }
+      }
+      scores {
+        id
+        amount
+        user {
+          id
+          name
+          email
+        }
+        artist {
+          id
+          name
+        }
       }
     }
   }
 `
+// const USER_QUERY = gql`
+// 	{
+//     user {
+//       name
+//       email
+//       artists {
+//         id
+//         name
+//         description
+//         image
+//         scores {
+//           amount
+//           category
+//           user {
+//             email
+//           }
+//         }
+//       }
+//       scores {
+//         amount
+//         user {
+//           name
+//           email
+//         }
+//         artist {
+//           id
+//           name
+//         }
+//       }
+//     }
+// 	}
+// `
 
 export default withApollo(Artist)

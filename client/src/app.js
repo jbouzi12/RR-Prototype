@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
 const USER_QUERY = gql`
 	{
     user {
+      id
       name
       email
       artists {
@@ -138,16 +139,20 @@ const USER_QUERY = gql`
         description
         image
         scores {
+          id
           amount
           category
           user {
+            id
             email
           }
         }
       }
       scores {
+        id
         amount
         user {
+          id
           name
           email
         }

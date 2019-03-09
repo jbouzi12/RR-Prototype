@@ -12,7 +12,6 @@ import {
 } from 'react-native';
 
 
-
 import Artist from './Artist';
 import ArtistDetails from './ArtistDetails';
 
@@ -59,7 +58,8 @@ class ArtistList extends Component<Props> {
            style={{
              height: 26,
              width: 26,
-             borderRadius: 13
+             borderRadius: 13,
+             marginRight: 4
            }}
          />
        </TouchableHighlight >
@@ -69,27 +69,26 @@ class ArtistList extends Component<Props> {
 
   checkTopArtists = (artist, topArtists) => {
 
-    for(i = 0; i < topArtists.length; i++) {
-      if(artist.name == topArtists[i].name) {
-        return true
-      } else {
-        return false
-      }
+    if(_.find(topArtists, {name: artist.name})) {
+      return true
+    } else {
+      return false
     }
+
   }
 
   executeSearch = async (filter) => {
 
   const result = await this.props.client.query({
     query: ARTIST_SEARCH_QUERY,
-    variables: { filter },
+    variables: { filter }
   })
-    const artists = result.data.artists.links
+    const artists = result.data.artists.link
+    ids
     this.setState({ artists })
   }
 
   render() {
-    console.log("CLIENT:", this.props.client)
 
     return (
     	<Query query={ARTIST_QUERY}>
@@ -151,19 +150,22 @@ class ArtistList extends Component<Props> {
                 onChangeText={(text) => this.executeSearch(text)}
                />
              </View>
-             {artists.map(artist =>
-             <TouchableHighlight
-               key={artist.id}
-               onPress={() => this.pressRow(artist, user)}
-               underlayColor="#ddd"
-             >
-               <Artist
-                 key={artist.id}
-                 artist={artist}
-                 user={user}
-                 includesArtist={this.checkTopArtists(artist, user.artists)}
-               />
-             </TouchableHighlight>)}
+             {artists.map((artist) => {
+               console.log("ARTIST:", artist)
+               return (
+                 <TouchableHighlight
+                   key={artist.id}
+                   onPress={() => this.pressRow(artist, user)}
+                   underlayColor="#ddd"
+                 >
+                   <Artist
+                     key={artist.id}
+                     artist={artist}
+                     user={user}
+                     includesArtist={this.checkTopArtists(artist, user.artists)}
+                   />
+                 </TouchableHighlight>
+               )})}
              {this.state.artists.map((artist, index) => {
 
                  return (<Artist
@@ -193,19 +195,12 @@ const styles = StyleSheet.create({
 });
 
 const ARTIST_SEARCH_QUERY = gql`
-  query ArtistSearchQuery($filter: String!) {
+  query searchArtists($filter: String!) {
 		artists(filter: $filter) {
 			id
 			name
 			description
       image
-      scores {
-        amount
-        category
-        user {
-          email
-        }
-      }
 		}
 	}
 `
@@ -219,9 +214,11 @@ const ARTIST_QUERY = gql`
 			description
       image
       scores {
+        id
         amount
         category
         user {
+          id
           email
         }
       }
@@ -232,6 +229,7 @@ const ARTIST_QUERY = gql`
 const USER_QUERY = gql`
 	{
     user {
+      id
       name
       email
       artists {
@@ -240,16 +238,20 @@ const USER_QUERY = gql`
         description
         image
         scores {
+          id
           amount
           category
           user {
+            id
             email
           }
         }
       }
       scores {
+        id
         amount
         user {
+          id
           name
           email
         }
