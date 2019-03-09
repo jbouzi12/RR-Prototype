@@ -33,7 +33,8 @@ import { graphql, Mutation, withApollo } from 'react-apollo';
             leftAvatar={{ source: {uri: image ? image : ""} }}
             title={name}
             titleStyle={{
-              fontWeight: "bold"
+              fontWeight: "bold",
+              color: "#282828"
             }}
             component={TouchableHighlight}
             bottomDivider={true}

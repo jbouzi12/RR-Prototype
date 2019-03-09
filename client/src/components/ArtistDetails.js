@@ -55,13 +55,17 @@ export default class ArtistDetails extends Component<Props> {
           <View
             key={index}
             style={{
-              marginBottom: 20
+              marginBottom: 5,
+              alignItems: "center",
+              textAlign: "center"
             }}
           >
             <Text
               style={{
                 fontWeight: "bold",
-                color: "ddd"
+                backgroundColor: "#ddd",
+                padding: 5,
+                color: "#FF365D"
               }}
             >
               {score.name}
@@ -96,9 +100,23 @@ export default class ArtistDetails extends Component<Props> {
                 />
               )}
             </Mutation>
-            <Text>Value:
-            {this.state[`${score.name.toLowerCase()}`]}
-            </Text>
+            <View
+              style={{
+                alignSelf: 'flex-start',
+                flexDirection: 'row'
+              }}
+            >
+              <Text>
+                Value:
+              </Text>
+              <Text
+                style={{
+                  color: "#FF365D"
+                }}
+              >
+                {this.state[`${score.name.toLowerCase()}`]}
+              </Text>
+            </View>
           </View>
       )
     })
@@ -123,23 +141,21 @@ export default class ArtistDetails extends Component<Props> {
 	   		 <Image
 		   		source={{uri: artist.image ? artist.image : ""}}
 		   		style={{
-		   			height: 100,
-		   			width: 100,
-		   			borderRadius: 50
+		   			height: 80,
+		   			width: 80,
+		   			borderRadius: 40,
+            marginLeft: 20
 		   		}}
 		   	/>
         <Button
-          type="outline"
-          title="Follow"
+          title="Add"
           style={{
-            width: 70,
-            color: "#FF365D",
-            backgroundColor: "#FF365D"
-
+            color:"fff",
+            marginTop:10
           }}
           buttonStyle={{
-            color: "#FF365D",
-            backgroundColor: "#FF365D"
+            backgroundColor:"#FF365D",
+            fontSize: 10
           }}
         />
 	  		<Text
