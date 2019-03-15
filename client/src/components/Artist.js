@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
 
 const ADD_TOP_ARTIST = gql`
   mutation addTopArtist($id: ID!, $email: String!) {
-    user(id: $id, email: $email) {
+    addTopArtist(id: $id, email: $email) {
       id
       name
       email
@@ -129,7 +129,7 @@ const ADD_TOP_ARTIST = gql`
 
 const REMOVE_TOP_ARTIST = gql`
   mutation removeTopArtist($id: ID!, $email: String!) {
-    user(id: $id, email: $email) {
+    removeTopArtist(id: $id, email: $email) {
       id
       name
       email

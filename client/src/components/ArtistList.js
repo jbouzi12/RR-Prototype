@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 
 const ARTIST_SEARCH_QUERY = gql`
   query searchArtists($filter: String!) {
-		artists(filter: $filter) {
+		searchArtists(filter: $filter) {
 			id
 			name
 			description

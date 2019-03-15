@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
 
 const NEW_SCORE = gql`
   mutation newScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
-    score(amount: $amount, category: $category, name: $name, email: $email) {
+    newScore(amount: $amount, category: $category, name: $name, email: $email) {
       amount
     }
   }
@@ -204,7 +204,7 @@ const NEW_SCORE = gql`
 
 const UPDATE_SCORE = gql`
   mutation updateScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
-    score(amount: $amount, category: $category, name: $name, email: $email) {
+    updateScore(amount: $amount, category: $category, name: $name, email: $email) {
       amount
     }
   }
