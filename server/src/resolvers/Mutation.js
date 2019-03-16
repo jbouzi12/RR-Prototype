@@ -45,7 +45,6 @@ async function newArtist(parent, args, context, info) {
 			name: args.name,
 			age: args.age,
 			image: args.image,
-			region: args.region,
 			albums: args.albums,
 			scores: args.scores
 			// createdBy: {connect: {id: userId}}
@@ -93,24 +92,7 @@ async function updateScore(parent, args, context, info) {
 
 }
 
-async function upsertScore(parent, args, context, info) {
 
-	return context.db.mutation.upsertScore({
-		create: {
-			user: {connect: {email: args.email}},
-			category: args.category,
-			artist: {connect: {name: args.name}},
-			amount: args.amount
-		},
-		where: {
-			id: args.id
-		},
-		update: {
-			amount: args.amount
-		}
-	}, info)
-
-}
 
 async function updateArtist(parent, args, context, info) {
 
@@ -120,45 +102,6 @@ async function updateArtist(parent, args, context, info) {
 			name: args.name,
 			age: args.age,
 			image: args.image,
-			region: args.region,
-			albums: args.albums,
-			scores: args.scores
-		},
-		where: {
-			id: args.id
-		},
-	}, info)
-
-}
-
-async function addArtist(parent, args, context, info) {
-
-	return context.db.mutation.updateArtist({
-		data: {
-			description: args.description,
-			name: args.name,
-			age: args.age,
-			image: args.image,
-			region: args.region,
-			albums: args.albums,
-			scores: args.scores
-		},
-		where: {
-			id: args.id
-		},
-	}, info)
-
-}
-
-async function updateArtist(parent, args, context, info) {
-
-	return context.db.mutation.updateArtist({
-		data: {
-			description: args.description,
-			name: args.name,
-			age: args.age,
-			image: args.image,
-			region: args.region,
 			albums: args.albums,
 			scores: args.scores
 		},
@@ -199,23 +142,6 @@ async function removeTopArtist(parent, args, context, info) {
 		}, info)
 
 }
-async function updateTopArtist(parent, args, context, info) {
-	let currentUser = await context.db.query.user({where: {email: args.email}})
-
-	console.log("CURRNT USER:", currentUser)
-
-	// return context.db.mutation.updateUser({
-	// 	data: {
-	// 		artists: {
-	// 			connect: {id: args.id}
-	// 		}
-	// 	},
-	// 	where: {
-	// 		email: args.email
-	// 	},
-	// }, info)
-
-}
 
 
 
@@ -228,7 +154,5 @@ module.exports = {
 	updateArtist,
 	addTopArtist,
 	removeTopArtist,
-	updateScore,
-	upsertScore,
-	updateTopArtist
+	updateScore
 }

@@ -4,11 +4,9 @@
 type Artist {
 	id: ID! @unique
 	name: String! @unique
-	age: Int!
+	age: Int
 	description: String!
 	image: String
-	region: String
-	yearStarted: Int
 	scores: [Score!]!
 	albums: [Album!]!
 }

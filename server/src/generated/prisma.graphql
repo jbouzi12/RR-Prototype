@@ -238,11 +238,9 @@ input AlbumWhereUniqueInput {
 type Artist {
   id: ID!
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
 }
@@ -255,11 +253,9 @@ type ArtistConnection {
 
 input ArtistCreateInput {
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreCreateManyWithoutArtistInput
   albums: AlbumCreateManyWithoutArtistInput
 }
@@ -281,21 +277,17 @@ input ArtistCreateOneWithoutScoresInput {
 
 input ArtistCreateWithoutAlbumsInput {
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreCreateManyWithoutArtistInput
 }
 
 input ArtistCreateWithoutScoresInput {
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   albums: AlbumCreateManyWithoutArtistInput
 }
 
@@ -315,10 +307,6 @@ enum ArtistOrderByInput {
   description_DESC
   image_ASC
   image_DESC
-  region_ASC
-  region_DESC
-  yearStarted_ASC
-  yearStarted_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -328,11 +316,9 @@ enum ArtistOrderByInput {
 type ArtistPreviousValues {
   id: ID!
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
 }
 
 input ArtistScalarWhereInput {
@@ -400,28 +386,6 @@ input ArtistScalarWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
-  region: String
-  region_not: String
-  region_in: [String!]
-  region_not_in: [String!]
-  region_lt: String
-  region_lte: String
-  region_gt: String
-  region_gte: String
-  region_contains: String
-  region_not_contains: String
-  region_starts_with: String
-  region_not_starts_with: String
-  region_ends_with: String
-  region_not_ends_with: String
-  yearStarted: Int
-  yearStarted_not: Int
-  yearStarted_in: [Int!]
-  yearStarted_not_in: [Int!]
-  yearStarted_lt: Int
-  yearStarted_lte: Int
-  yearStarted_gt: Int
-  yearStarted_gte: Int
   AND: [ArtistScalarWhereInput!]
   OR: [ArtistScalarWhereInput!]
   NOT: [ArtistScalarWhereInput!]
@@ -450,8 +414,6 @@ input ArtistUpdateDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreUpdateManyWithoutArtistInput
   albums: AlbumUpdateManyWithoutArtistInput
 }
@@ -461,8 +423,6 @@ input ArtistUpdateInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreUpdateManyWithoutArtistInput
   albums: AlbumUpdateManyWithoutArtistInput
 }
@@ -472,8 +432,6 @@ input ArtistUpdateManyDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
 }
 
 input ArtistUpdateManyInput {
@@ -493,8 +451,6 @@ input ArtistUpdateManyMutationInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
 }
 
 input ArtistUpdateManyWithWhereNestedInput {
@@ -521,8 +477,6 @@ input ArtistUpdateWithoutAlbumsDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreUpdateManyWithoutArtistInput
 }
 
@@ -531,8 +485,6 @@ input ArtistUpdateWithoutScoresDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   albums: AlbumUpdateManyWithoutArtistInput
 }
 
@@ -622,28 +574,6 @@ input ArtistWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
-  region: String
-  region_not: String
-  region_in: [String!]
-  region_not_in: [String!]
-  region_lt: String
-  region_lte: String
-  region_gt: String
-  region_gte: String
-  region_contains: String
-  region_not_contains: String
-  region_starts_with: String
-  region_not_starts_with: String
-  region_ends_with: String
-  region_not_ends_with: String
-  yearStarted: Int
-  yearStarted_not: Int
-  yearStarted_in: [Int!]
-  yearStarted_not_in: [Int!]
-  yearStarted_lt: Int
-  yearStarted_lte: Int
-  yearStarted_gt: Int
-  yearStarted_gte: Int
   scores_every: ScoreWhereInput
   scores_some: ScoreWhereInput
   scores_none: ScoreWhereInput

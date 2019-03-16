@@ -1,10 +1,6 @@
 const {getUserId} = require('../utils')
 
 function artists(parent, args, context, info) {
-    return context.db.query.artists({}, info)
-}
-
- function searchArtists(parent, args, ctx, info) {
   const { filter } = args // destructure input arguments
   const where = filter
     ? { OR: [{ name_contains: filter }] }
@@ -12,7 +8,7 @@ function artists(parent, args, context, info) {
 
   let aritstQuery = filter && filter.length > 0 ? {where} : {}
 
-  return ctx.db.query.artists({ where })
+  return context.db.query.artists({ where })
 
 }
 
@@ -55,6 +51,5 @@ module.exports = {
 	album,
   score,
   scores,
-  user,
-  searchArtists
+  user
 }
