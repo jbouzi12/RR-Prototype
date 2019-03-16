@@ -28,7 +28,7 @@ class ArtistList extends Component<Props> {
 
   state = {
     currentArtist: {},
-    artists: []
+    filter: ""
   }
 
   pressRow = (artist, user) => {
@@ -77,28 +77,46 @@ class ArtistList extends Component<Props> {
 
   }
 
-  executeSearch = async (filter) => {
+  renderArtistList = (artists, user, loading, error) => {
+    if (loading) {
+      return <Text>loading...</Text>
+    } else if(error) {
+        console.log("ERORTWO:", error)
+       return (
+         <Text> Error </Text>
+       )
+    }
 
-  const result = await this.props.client.query({
-    query: ARTIST_SEARCH_QUERY,
-    variables: { filter }
-  })
-    const artists = result.data.artists.link
-    ids
-    this.setState({ artists })
+    return artists.map((artist) => {
+      return (
+        <TouchableHighlight
+          key={artist.id}
+          onPress={() => this.pressRow(artist, user)}
+          underlayColor="#ddd"
+        >
+          <Artist
+            key={artist.id}
+            artist={artist}
+            user={user}
+            includesArtist={this.checkTopArtists(artist, user.artists)}
+          />
+        </TouchableHighlight>
+      )
+    })
   }
+
 
   render() {
 
     return (
-    	<Query query={ARTIST_QUERY}>
+    	<Query query={ARTISTS_QUERY} variables={{filter: this.state.filter}}>
         {({ loading: loadingOne, error: errorOne, data: {artists}  }) => (
         <Query query={USER_QUERY}>
           {({ loading: loadingTwo, error: errorTwo, data: {user} }) => {
             console.log("DATA:", artists, user)
-            if (loadingOne || loadingTwo) return <Text>loading...</Text>
-            if(errorOne || errorTwo) {
-              console.log("ERRORONE:", errorOne, "ERORTWO:", errorTwo)
+            if (loadingTwo) return <Text>loading...</Text>
+            if(errorTwo) {
+              console.log("ERORTWO:", errorTwo)
       				return (
       					<Text> Error </Text>
       				)
@@ -147,35 +165,10 @@ class ArtistList extends Component<Props> {
              >
               <TextInput
                 placeholder="Search Artist"
-                onChangeText={(text) => this.executeSearch(text)}
+                onChangeText={(text) => this.setState({filter: text})}
                />
              </View>
-             {artists.map((artist) => {
-               console.log("ARTIST:", artist)
-               return (
-                 <TouchableHighlight
-                   key={artist.id}
-                   onPress={() => this.pressRow(artist, user)}
-                   underlayColor="#ddd"
-                 >
-                   <Artist
-                     key={artist.id}
-                     artist={artist}
-                     user={user}
-                     includesArtist={this.checkTopArtists(artist, user.artists)}
-                   />
-                 </TouchableHighlight>
-               )})}
-             {this.state.artists.map((artist, index) => {
-
-                 return (<Artist
-                   key={artist.id}
-                   artist={artist}
-                   user={user}
-                   includesArtist={this.checkTopArtists(artist, user.artists)}
-                 />
-               )
-             })}
+             {this.renderArtistList(artists, user, loadingOne, errorOne)}
            </View>
           )
         }}
@@ -194,21 +187,11 @@ const styles = StyleSheet.create({
   }
 });
 
-const ARTIST_SEARCH_QUERY = gql`
-  query searchArtists($filter: String!) {
-		searchArtists(filter: $filter) {
-			id
-			name
-			description
-      image
-		}
-	}
-`
 
 
-const ARTIST_QUERY = gql`
-	{
-		artists {
+const ARTISTS_QUERY = gql`
+	query artists($filter: String!){
+		artists(filter: $filter) {
 			id
 			name
 			description
