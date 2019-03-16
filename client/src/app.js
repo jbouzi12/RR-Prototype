@@ -10,9 +10,6 @@ import {
   Image
 } from 'react-native';
 import ArtistList from './components/ArtistList'
-// import './styles/index.css'
-// import App from './components/App'
-// import registerServiceWorker from './registerServiceWorker'
 import {ApolloProvider} from 'react-apollo'
 import {createHttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
@@ -56,37 +53,10 @@ const client = new ApolloClient({
 
 export default class App extends Component<Props> {
 
-  state = {
-    currentArtist: {},
-    artists: []
-  }
-
-  renderTopArtists = (artists) => {
-    return artists.map((artist, index) => {
-      return (
-        <TouchableHighlight
-          key={index}
-          onPress={() => this.setState({currentArtist: this.state.currentArtist ? "" : artist})}
-          underlayColor="#ddd"
-        >
-          <Image
-           source={{uri: artist.image ? artist.image : ""}}
-           style={{
-             height: 26,
-             width: 26,
-             borderRadius: 13
-           }}
-         />
-       </TouchableHighlight >
-      )
-    })
-  }
-
 
   render() {
     return (
     <ApolloProvider client={client}>
-
 	     <NavigatorIOS
 	     	style={{flex:1}}
         barTintColor='#fff'
@@ -95,10 +65,6 @@ export default class App extends Component<Props> {
 	     	initialRoute={{
           component: ArtistList,
 	     		title: 'Artists',
-          // header: {
-          //  style: {{ backgroundColor: '#fff' }},
-          //  titleStyle: {{ color: '#FF365D' }},
-          // }
         }}
   	   />
 	   </ApolloProvider>

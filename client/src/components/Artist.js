@@ -67,10 +67,7 @@ import { graphql, Mutation, withApollo } from 'react-apollo';
 const styles = StyleSheet.create({
 
   groupContainer: {
-    // flex: 1,
-    // flexDirection: 'row',
     alignItems: 'center',
-  //   backgroundColor: 'white',
     borderBottomColor: '#eee',
     borderBottomWidth: 1,
     paddingHorizontal: 12,
@@ -79,8 +76,7 @@ const styles = StyleSheet.create({
   },
   groupName: {
     fontWeight: 'bold',
-    fontSize: 20,
-    // flex: 0.7,
+    fontSize: 20
   },
   image: {
     height: 30,
@@ -164,37 +160,6 @@ const REMOVE_TOP_ARTIST = gql`
     }
   }
 `
-// const USER_QUERY = gql`
-// 	{
-//     user {
-//       name
-//       email
-//       artists {
-//         id
-//         name
-//         description
-//         image
-//         scores {
-//           amount
-//           category
-//           user {
-//             email
-//           }
-//         }
-//       }
-//       scores {
-//         amount
-//         user {
-//           name
-//           email
-//         }
-//         artist {
-//           id
-//           name
-//         }
-//       }
-//     }
-// 	}
-// `
+
 
 export default withApollo(Artist)
