@@ -8,7 +8,8 @@ import {
   TouchableHighlight,
   View,
   Image,
-  TextInput
+  TextInput,
+  ScrollView
 } from 'react-native';
 
 
@@ -168,7 +169,13 @@ class ArtistList extends Component<Props> {
                 onChangeText={(text) => this.setState({filter: text})}
                />
              </View>
-             {this.renderArtistList(artists, user, loadingOne, errorOne)}
+             <ScrollView
+             style={{
+               height: 300
+             }}
+             >
+              {this.renderArtistList(artists,user, loadingOne, errorOne)}
+             </ScrollView>
            </View>
           )
         }}
