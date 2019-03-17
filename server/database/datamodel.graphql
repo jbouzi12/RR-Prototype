@@ -4,13 +4,11 @@
 type Artist {
 	id: ID! @unique
 	name: String! @unique
-	age: Int!
+	age: Int
 	description: String!
 	image: String
-	region: String
-	yearStarted: Int
 	scores: [Score!]!
-	albums: [Album!]!			
+	albums: [Album!]!
 }
 
 type User {
@@ -19,6 +17,7 @@ type User {
 	name: String!
 	password: String!
 	artists: [Artist!]!
+	scores: [Score]
 }
 
 
@@ -27,11 +26,13 @@ type Score {
 	category: String!
 	amount: Int!
 	artist: Artist!
+	user: User
 }
 
 type Album {
 	id: ID! @unique
-	name: String!
+	title: String! @unique
 	artist: Artist!
+	image: String
 	releaseDate: String
 }

@@ -7,32 +7,67 @@ import {
   Text,
   TouchableHighlight,
   View,
+  Image
 } from 'react-native';
 
+import { ListItem, ButtonGroup } from 'react-native-elements'
+import gql from 'graphql-tag';
+import { graphql, Mutation, withApollo } from 'react-apollo';
 
-export default class Artist extends Component<Props> {
+
+
+ class Artist extends Component {
+
 
   render() {
 
-  	const { id, name } = this.props.artist;
+  	const { id, name, image } = this.props.artist;
 
-  	
+    let followButton = this.props.includesArtist ? 'Remove' : "Add"
 
     return (
-	    <View key={id} style={styles.groupContainer}>
-	        <Text style={styles.groupName}>{name}</Text>
-	    </View>
+      <Mutation mutation={this.props.includesArtist ? REMOVE_TOP_ARTIST : ADD_TOP_ARTIST}>
+        {(updateTopArtistsMutation, { loading, error, data }) => (
+          <ListItem
+            key={id}
+            leftAvatar={{ source: {uri: image ? image : ""} }}
+            title={name}
+            titleStyle={{
+              fontWeight: "bold",
+              color: "#282828"
+            }}
+            component={TouchableHighlight}
+            bottomDivider={true}
+            underlayColor="#ddd"
+            buttonGroup = {{
+              buttons: [followButton],
+              textStyle: {
+                color: "#FF365D"
+              },
+              onPress: () => updateTopArtistsMutation({
+                variables: {
+                  id: id,
+                  email: this.props.user && this.props.user.email ? this.props.user.email : null
+                }
+              })
+              .then((res) => {
+                console.log("RESPONSE:", res)
+              })
+              .catch((error) => {
+                console.log('there was an error sending the query', error);
+              })
+            }}
+          />
+        )}
+      </Mutation>
     );
   }
 }
 
 const styles = StyleSheet.create({
- 
+
   groupContainer: {
-    // flex: 1,
-    // flexDirection: 'row',
     alignItems: 'center',
-  //   backgroundColor: 'white',
     borderBottomColor: '#eee',
     borderBottomWidth: 1,
     paddingHorizontal: 12,
@@ -41,7 +76,90 @@ const styles = StyleSheet.create({
   },
   groupName: {
     fontWeight: 'bold',
-    fontSize: 20,
-    // flex: 0.7,
+    fontSize: 20
   },
+  image: {
+    height: 30,
+    width: 30,
+    borderRadius: 60
+  }
 });
+
+const ADD_TOP_ARTIST = gql`
+  mutation addTopArtist($id: ID!, $email: String!) {
+    addTopArtist(id: $id, email: $email) {
+      id
+      name
+      email
+      artists {
+        id
+        name
+        description
+        image
+        scores {
+          id
+          amount
+          category
+          user {
+            id
+            email
+          }
+        }
+      }
+      scores {
+        id
+        amount
+        user {
+          id
+          name
+          email
+        }
+        artist {
+          id
+          name
+        }
+      }
+    }
+  }
+`
+
+const REMOVE_TOP_ARTIST = gql`
+  mutation removeTopArtist($id: ID!, $email: String!) {
+    removeTopArtist(id: $id, email: $email) {
+      id
+      name
+      email
+      artists {
+        id
+        name
+        description
+        image
+        scores {
+          id
+          amount
+          category
+          user {
+            id
+            email
+          }
+        }
+      }
+      scores {
+        id
+        amount
+        user {
+          id
+          name
+          email
+        }
+        artist {
+          id
+          name
+        }
+      }
+    }
+  }
+`
+
+
+export default withApollo(Artist)

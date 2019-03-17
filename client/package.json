@@ -11,6 +11,7 @@
     "apollo-client": "^2.4.7",
     "apollo-client-preset": "^1.0.8",
     "apollo-link": "^1.2.4",
+    "apollo-link-context": "^1.0.15",
     "apollo-link-error": "^1.1.2",
     "apollo-link-http": "^1.5.7",
     "graphql": "^14.0.2",
@@ -22,6 +23,8 @@
     "react": "16.6.1",
     "react-apollo": "^2.3.1",
     "react-native": "0.57.5",
+    "react-native-elements": "^1.1.0",
+    "react-native-vector-icons": "^6.3.0",
     "react-navigation": "^3.0.9"
   },
   "devDependencies": {

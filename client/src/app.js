@@ -1,19 +1,21 @@
+import {ApolloClient} from 'apollo-client'
 import React, { Component } from 'react';
 import {
   Platform,
   StyleSheet,
   Text,
   View,
-  NavigatorIOS
+  NavigatorIOS,
+  TouchableHighlight,
+  Image
 } from 'react-native';
 import ArtistList from './components/ArtistList'
-// import './styles/index.css'
-// import App from './components/App'
-// import registerServiceWorker from './registerServiceWorker'
 import {ApolloProvider} from 'react-apollo'
-import {ApolloClient} from 'apollo-client'
 import {createHttpLink} from 'apollo-link-http'
 import {InMemoryCache} from 'apollo-cache-inmemory'
+import { setContext } from 'apollo-link-context';
+import { Query } from 'react-apollo';
+import gql from 'graphql-tag';
 
 
 const instructions = Platform.select({
@@ -28,21 +30,44 @@ const httpLink = createHttpLink({
 	// uri: 'https://us1.prisma.sh/mrbouzi/database/dev'
 })
 
+const authLink = setContext((_, { headers }) => {
+  // get the authentication token from local storage if it exists
+  // return the headers to the context so httpLink can read them
+  return {
+    headers: {
+      ...headers,
+      authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjanN3b2d0YTcyMHlxMGI4NGxqcndhb21kIiwiaWF0IjoxNTUxODQ1MDM2fQ.VmjpkJdjq-76kFvzOdDSnZCGzo_DHqzrcJVatINRB_g"
+    }
+  }
+});
+
+
 const client = new ApolloClient({
-	link: httpLink,
-	cache: new InMemoryCache()
+	link: authLink.concat(httpLink),
+	cache: new InMemoryCache(),
+  onError: ({ networkError, graphQLErrors }) => {
+    console.log('graphQLErrors', graphQLErrors)
+    console.log('networkError', networkError)
+  }
 })
 
 export default class App extends Component<Props> {
+
+
   render() {
     return (
     <ApolloProvider client={client}>
-	     <NavigatorIOS 
+	     <NavigatorIOS
 	     	style={{flex:1}}
-	     	initialRoute={{component: ArtistList,
-	     		title: 'Artists'}}
-	     	/>
-	 </ApolloProvider>
+        barTintColor='#fff'
+        titleTextColor='#FF365D'
+        tintColor='#FF365D'
+	     	initialRoute={{
+          component: ArtistList,
+	     		title: 'Artists',
+        }}
+  	   />
+	   </ApolloProvider>
     );
   }
 }
@@ -67,3 +92,41 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
 });
+
+const USER_QUERY = gql`
+	{
+    user {
+      id
+      name
+      email
+      artists {
+        id
+        name
+        description
+        image
+        scores {
+          id
+          amount
+          category
+          user {
+            id
+            email
+          }
+        }
+      }
+      scores {
+        id
+        amount
+        user {
+          id
+          name
+          email
+        }
+        artist {
+          id
+          name
+        }
+      }
+    }
+	}
+`

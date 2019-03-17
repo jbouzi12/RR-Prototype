@@ -16,8 +16,9 @@ type AggregateUser {
 
 type Album {
   id: ID!
-  name: String!
+  title: String!
   artist: Artist!
+  image: String
   releaseDate: String
 }
 
@@ -28,8 +29,9 @@ type AlbumConnection {
 }
 
 input AlbumCreateInput {
-  name: String!
+  title: String!
   artist: ArtistCreateOneWithoutAlbumsInput!
+  image: String
   releaseDate: String
 }
 
@@ -39,7 +41,8 @@ input AlbumCreateManyWithoutArtistInput {
 }
 
 input AlbumCreateWithoutArtistInput {
-  name: String!
+  title: String!
+  image: String
   releaseDate: String
 }
 
@@ -51,8 +54,10 @@ type AlbumEdge {
 enum AlbumOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  title_ASC
+  title_DESC
+  image_ASC
+  image_DESC
   releaseDate_ASC
   releaseDate_DESC
   createdAt_ASC
@@ -63,7 +68,8 @@ enum AlbumOrderByInput {
 
 type AlbumPreviousValues {
   id: ID!
-  name: String!
+  title: String!
+  image: String
   releaseDate: String
 }
 
@@ -82,20 +88,34 @@ input AlbumScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   releaseDate: String
   releaseDate_not: String
   releaseDate_in: [String!]
@@ -134,18 +154,21 @@ input AlbumSubscriptionWhereInput {
 }
 
 input AlbumUpdateInput {
-  name: String
+  title: String
   artist: ArtistUpdateOneRequiredWithoutAlbumsInput
+  image: String
   releaseDate: String
 }
 
 input AlbumUpdateManyDataInput {
-  name: String
+  title: String
+  image: String
   releaseDate: String
 }
 
 input AlbumUpdateManyMutationInput {
-  name: String
+  title: String
+  image: String
   releaseDate: String
 }
 
@@ -167,7 +190,8 @@ input AlbumUpdateManyWithWhereNestedInput {
 }
 
 input AlbumUpdateWithoutArtistDataInput {
-  name: String
+  title: String
+  image: String
   releaseDate: String
 }
 
@@ -197,21 +221,35 @@ input AlbumWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
   artist: ArtistWhereInput
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   releaseDate: String
   releaseDate_not: String
   releaseDate_in: [String!]
@@ -233,16 +271,15 @@ input AlbumWhereInput {
 
 input AlbumWhereUniqueInput {
   id: ID
+  title: String
 }
 
 type Artist {
   id: ID!
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
   albums(where: AlbumWhereInput, orderBy: AlbumOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Album!]
 }
@@ -255,11 +292,9 @@ type ArtistConnection {
 
 input ArtistCreateInput {
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreCreateManyWithoutArtistInput
   albums: AlbumCreateManyWithoutArtistInput
 }
@@ -281,21 +316,17 @@ input ArtistCreateOneWithoutScoresInput {
 
 input ArtistCreateWithoutAlbumsInput {
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreCreateManyWithoutArtistInput
 }
 
 input ArtistCreateWithoutScoresInput {
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
   albums: AlbumCreateManyWithoutArtistInput
 }
 
@@ -315,10 +346,6 @@ enum ArtistOrderByInput {
   description_DESC
   image_ASC
   image_DESC
-  region_ASC
-  region_DESC
-  yearStarted_ASC
-  yearStarted_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -328,11 +355,9 @@ enum ArtistOrderByInput {
 type ArtistPreviousValues {
   id: ID!
   name: String!
-  age: Int!
+  age: Int
   description: String!
   image: String
-  region: String
-  yearStarted: Int
 }
 
 input ArtistScalarWhereInput {
@@ -400,28 +425,6 @@ input ArtistScalarWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
-  region: String
-  region_not: String
-  region_in: [String!]
-  region_not_in: [String!]
-  region_lt: String
-  region_lte: String
-  region_gt: String
-  region_gte: String
-  region_contains: String
-  region_not_contains: String
-  region_starts_with: String
-  region_not_starts_with: String
-  region_ends_with: String
-  region_not_ends_with: String
-  yearStarted: Int
-  yearStarted_not: Int
-  yearStarted_in: [Int!]
-  yearStarted_not_in: [Int!]
-  yearStarted_lt: Int
-  yearStarted_lte: Int
-  yearStarted_gt: Int
-  yearStarted_gte: Int
   AND: [ArtistScalarWhereInput!]
   OR: [ArtistScalarWhereInput!]
   NOT: [ArtistScalarWhereInput!]
@@ -450,8 +453,6 @@ input ArtistUpdateDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreUpdateManyWithoutArtistInput
   albums: AlbumUpdateManyWithoutArtistInput
 }
@@ -461,8 +462,6 @@ input ArtistUpdateInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreUpdateManyWithoutArtistInput
   albums: AlbumUpdateManyWithoutArtistInput
 }
@@ -472,8 +471,6 @@ input ArtistUpdateManyDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
 }
 
 input ArtistUpdateManyInput {
@@ -493,8 +490,6 @@ input ArtistUpdateManyMutationInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
 }
 
 input ArtistUpdateManyWithWhereNestedInput {
@@ -521,8 +516,6 @@ input ArtistUpdateWithoutAlbumsDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   scores: ScoreUpdateManyWithoutArtistInput
 }
 
@@ -531,8 +524,6 @@ input ArtistUpdateWithoutScoresDataInput {
   age: Int
   description: String
   image: String
-  region: String
-  yearStarted: Int
   albums: AlbumUpdateManyWithoutArtistInput
 }
 
@@ -622,28 +613,6 @@ input ArtistWhereInput {
   image_not_starts_with: String
   image_ends_with: String
   image_not_ends_with: String
-  region: String
-  region_not: String
-  region_in: [String!]
-  region_not_in: [String!]
-  region_lt: String
-  region_lte: String
-  region_gt: String
-  region_gte: String
-  region_contains: String
-  region_not_contains: String
-  region_starts_with: String
-  region_not_starts_with: String
-  region_ends_with: String
-  region_not_ends_with: String
-  yearStarted: Int
-  yearStarted_not: Int
-  yearStarted_in: [Int!]
-  yearStarted_not_in: [Int!]
-  yearStarted_lt: Int
-  yearStarted_lte: Int
-  yearStarted_gt: Int
-  yearStarted_gte: Int
   scores_every: ScoreWhereInput
   scores_some: ScoreWhereInput
   scores_none: ScoreWhereInput
@@ -731,6 +700,7 @@ type Score {
   category: String!
   amount: Int!
   artist: Artist!
+  user: User
 }
 
 type ScoreConnection {
@@ -743,6 +713,7 @@ input ScoreCreateInput {
   category: String!
   amount: Int!
   artist: ArtistCreateOneWithoutScoresInput!
+  user: UserCreateOneWithoutScoresInput
 }
 
 input ScoreCreateManyWithoutArtistInput {
@@ -750,9 +721,21 @@ input ScoreCreateManyWithoutArtistInput {
   connect: [ScoreWhereUniqueInput!]
 }
 
+input ScoreCreateManyWithoutUserInput {
+  create: [ScoreCreateWithoutUserInput!]
+  connect: [ScoreWhereUniqueInput!]
+}
+
 input ScoreCreateWithoutArtistInput {
   category: String!
   amount: Int!
+  user: UserCreateOneWithoutScoresInput
+}
+
+input ScoreCreateWithoutUserInput {
+  category: String!
+  amount: Int!
+  artist: ArtistCreateOneWithoutScoresInput!
 }
 
 type ScoreEdge {
@@ -843,6 +826,7 @@ input ScoreUpdateInput {
   category: String
   amount: Int
   artist: ArtistUpdateOneRequiredWithoutScoresInput
+  user: UserUpdateOneWithoutScoresInput
 }
 
 input ScoreUpdateManyDataInput {
@@ -867,6 +851,18 @@ input ScoreUpdateManyWithoutArtistInput {
   updateMany: [ScoreUpdateManyWithWhereNestedInput!]
 }
 
+input ScoreUpdateManyWithoutUserInput {
+  create: [ScoreCreateWithoutUserInput!]
+  delete: [ScoreWhereUniqueInput!]
+  connect: [ScoreWhereUniqueInput!]
+  set: [ScoreWhereUniqueInput!]
+  disconnect: [ScoreWhereUniqueInput!]
+  update: [ScoreUpdateWithWhereUniqueWithoutUserInput!]
+  upsert: [ScoreUpsertWithWhereUniqueWithoutUserInput!]
+  deleteMany: [ScoreScalarWhereInput!]
+  updateMany: [ScoreUpdateManyWithWhereNestedInput!]
+}
+
 input ScoreUpdateManyWithWhereNestedInput {
   where: ScoreScalarWhereInput!
   data: ScoreUpdateManyDataInput!
@@ -875,6 +871,13 @@ input ScoreUpdateManyWithWhereNestedInput {
 input ScoreUpdateWithoutArtistDataInput {
   category: String
   amount: Int
+  user: UserUpdateOneWithoutScoresInput
+}
+
+input ScoreUpdateWithoutUserDataInput {
+  category: String
+  amount: Int
+  artist: ArtistUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateWithWhereUniqueWithoutArtistInput {
@@ -882,10 +885,21 @@ input ScoreUpdateWithWhereUniqueWithoutArtistInput {
   data: ScoreUpdateWithoutArtistDataInput!
 }
 
+input ScoreUpdateWithWhereUniqueWithoutUserInput {
+  where: ScoreWhereUniqueInput!
+  data: ScoreUpdateWithoutUserDataInput!
+}
+
 input ScoreUpsertWithWhereUniqueWithoutArtistInput {
   where: ScoreWhereUniqueInput!
   update: ScoreUpdateWithoutArtistDataInput!
   create: ScoreCreateWithoutArtistInput!
+}
+
+input ScoreUpsertWithWhereUniqueWithoutUserInput {
+  where: ScoreWhereUniqueInput!
+  update: ScoreUpdateWithoutUserDataInput!
+  create: ScoreCreateWithoutUserInput!
 }
 
 input ScoreWhereInput {
@@ -926,6 +940,7 @@ input ScoreWhereInput {
   amount_gt: Int
   amount_gte: Int
   artist: ArtistWhereInput
+  user: UserWhereInput
   AND: [ScoreWhereInput!]
   OR: [ScoreWhereInput!]
   NOT: [ScoreWhereInput!]
@@ -948,6 +963,7 @@ type User {
   name: String!
   password: String!
   artists(where: ArtistWhereInput, orderBy: ArtistOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Artist!]
+  scores(where: ScoreWhereInput, orderBy: ScoreOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Score!]
 }
 
 type UserConnection {
@@ -957,6 +973,19 @@ type UserConnection {
 }
 
 input UserCreateInput {
+  email: String!
+  name: String!
+  password: String!
+  artists: ArtistCreateManyInput
+  scores: ScoreCreateManyWithoutUserInput
+}
+
+input UserCreateOneWithoutScoresInput {
+  create: UserCreateWithoutScoresInput
+  connect: UserWhereUniqueInput
+}
+
+input UserCreateWithoutScoresInput {
   email: String!
   name: String!
   password: String!
@@ -1013,12 +1042,34 @@ input UserUpdateInput {
   name: String
   password: String
   artists: ArtistUpdateManyInput
+  scores: ScoreUpdateManyWithoutUserInput
 }
 
 input UserUpdateManyMutationInput {
   email: String
   name: String
   password: String
+}
+
+input UserUpdateOneWithoutScoresInput {
+  create: UserCreateWithoutScoresInput
+  update: UserUpdateWithoutScoresDataInput
+  upsert: UserUpsertWithoutScoresInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutScoresDataInput {
+  email: String
+  name: String
+  password: String
+  artists: ArtistUpdateManyInput
+}
+
+input UserUpsertWithoutScoresInput {
+  update: UserUpdateWithoutScoresDataInput!
+  create: UserCreateWithoutScoresInput!
 }
 
 input UserWhereInput {
@@ -1081,6 +1132,9 @@ input UserWhereInput {
   artists_every: ArtistWhereInput
   artists_some: ArtistWhereInput
   artists_none: ArtistWhereInput
+  scores_every: ScoreWhereInput
+  scores_some: ScoreWhereInput
+  scores_none: ScoreWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]

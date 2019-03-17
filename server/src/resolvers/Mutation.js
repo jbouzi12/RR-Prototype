@@ -45,36 +45,55 @@ async function newArtist(parent, args, context, info) {
 			name: args.name,
 			age: args.age,
 			image: args.image,
-			region: args.region,
 			albums: args.albums,
 			scores: args.scores
 			// createdBy: {connect: {id: userId}}
 		},
 	}, info)
-		
+
 }
 
 async function newAlbum(parent, args, context, info) {
 	return context.db.mutation.createAlbum({
 		data: {
-			name: args.name,
-			artist: {connect: {name: args.artistName}},
-			releaseDate: args.releaseDate
+			title: args.title,
+			artist: {connect: {name: args.name}},
+			releaseDate: args.releaseDate,
+			image: args.image
 		},
 	}, info)
-		
+
 }
 
 async function newScore(parent, args, context, info) {
+
 	return context.db.mutation.createScore({
 		data: {
 			category: args.category,
-			artist: {connect: {name: args.artistName}},
-			amount: args.amount
+			artist: {connect: {name: args.name}},
+			amount: args.amount,
+			user: {connect: {email: args.email}}
 		},
 	}, info)
-		
+
 }
+
+async function updateScore(parent, args, context, info) {
+
+	return context.db.mutation.createScore({
+		data: {
+			amount: args.amount
+		},
+		where: {
+			user: {connect: {email: args.email}},
+			category: args.category,
+			artist: {connect: {name: args.name}},
+		}
+	}, info)
+
+}
+
+
 
 async function updateArtist(parent, args, context, info) {
 
@@ -84,16 +103,48 @@ async function updateArtist(parent, args, context, info) {
 			name: args.name,
 			age: args.age,
 			image: args.image,
-			region: args.region,
 			albums: args.albums,
 			scores: args.scores
 		},
-		where: {	
+		where: {
 			id: args.id
 		},
 	}, info)
-		
+
 }
+
+async function addTopArtist(parent, args, context, info) {
+
+	return context.db.mutation.updateUser({
+		data: {
+			artists: {
+				connect: {id: args.id}
+			}
+		},
+		where: {
+			email: args.email
+		},
+	}, info)
+
+}
+
+async function removeTopArtist(parent, args, context, info) {
+
+
+		return context.db.mutation.updateUser({
+			data: {
+				artists: {
+					disconnect: {id: args.id}
+				}
+			},
+			where: {
+				email: args.email
+			},
+		}, info)
+
+}
+
+
 
 module.exports = {
 	signup,
@@ -101,5 +152,8 @@ module.exports = {
 	newArtist,
 	newAlbum,
 	newScore,
-	updateArtist
+	updateArtist,
+	addTopArtist,
+	removeTopArtist,
+	updateScore
 }

@@ -1,29 +1,37 @@
 # import Artist from "./generated/prisma.graphql"
 
 type Query {
-	artists: [Artist!]!
+	artists(filter: String!): [Artist!]!
 	users: [User!]!
 	albums: [Album!]!
 	scores: [Score!]!
 	artist: Artist!
 	album: Album!
+	score: Score!
+	user: User
+	artistSearch: [Artist!]!
 }
 
 
 type Mutation {
-	newArtist(name: String!, age: Int!, description: String!, image: String!): Artist!
+	newArtist(name: String!, description: String!, image: String!): Artist!
 	signup(email: String!, password: String!, name: String!): AuthPayload
 	login(email: String!, password: String!): AuthPayload
-	newAlbum(name: String!, artistName: String!): Album!
-	newScore(amount: Int!, category: String!, artistName: String!): Score!
+	newAlbum(title: String!, name: String!, releaseDate: String, image: String): Album!
+	newScore(amount: Int!, category: String!, name: String!, email: String!): Score!
 	updateArtist(id: ID!, name: String, age: Int, description: String, image: String): Artist!
+	addTopArtist(id: ID!, email: String!): User!
+	removeTopArtist(id: ID!, email: String!): User!
+	updateTopArtist(id: ID!, email: String!): User!
+	updateScore(amount: Int!, category: String!, name: String!, email: String!): Score!
 }
 
 
 type Album {
 	id: ID!
-	name: String!
+	title: String!
 	releaseDate: String
+	image: String
 	artist: Artist!
 }
 
@@ -33,6 +41,7 @@ type Score {
 	category: String!
 	amount: Int!
 	artist: Artist!
+	user: User
 }
 
 type AuthPayload {
@@ -45,4 +54,5 @@ type User {
 	name: String!
 	email: String!
 	artists: [Artist!]!
+	scores: [Score]
 }
