@@ -56,9 +56,10 @@ export default class ArtistDetails extends Component<Props> {
           <View
             key={index}
             style={{
-              marginBottom: 5,
+              marginBottom: 15,
               alignItems: "center",
-              textAlign: "center"
+              // textAlign: "center",
+              width: "50%"
             }}
           >
             <Text
@@ -94,7 +95,7 @@ export default class ArtistDetails extends Component<Props> {
                   maximumValue = {5}
                   step={1}
                   style={{
-                    width: 200
+                    width: 120
                   }}
                   minimumTrackTintColor="#FF365D"
                   thumbTintColor= "#ddd"
@@ -103,11 +104,14 @@ export default class ArtistDetails extends Component<Props> {
             </Mutation>
             <View
               style={{
-                alignSelf: 'flex-start',
-                flexDirection: 'row'
+                // alignSelf: 'flex-start',
+                flexDirection: 'row',
+                alignItems: "center"
               }}
             >
-              <Text>
+              <Text
+
+              >
                 Value:
               </Text>
               <Text
@@ -129,15 +133,26 @@ export default class ArtistDetails extends Component<Props> {
         return (
           <View
             key={album.id}
+            style={{
+              width: 120,
+              marginRight: 10
+            }}
           >
             <Image
              source={{uri: album.image ? album.image : ""}}
              style={{
-               height: 60,
-               width: 60,
+               width: 120,
+               height: 120
              }}
             />
-            <Text>{album.title}</Text><Text>{album.releaseDate}</Text>
+            <View
+              style={{
+                width: "70%"
+              }}
+            >
+              <Text style={{flexWrap: 'wrap', color: "#FF365D", fontWeight: "bold"}}>{album.title}</Text>
+              <Text style={{flexWrap: 'wrap', fontStyle: "italic"}}t>{album.releaseDate}</Text>
+            </View>
           </View>
         )
       })
@@ -188,11 +203,22 @@ export default class ArtistDetails extends Component<Props> {
 	  			{artist.description}
 	  		</Text>
       </View>
-      <View>
+      <View
+      style={{
+        flex: 2,
+        flexDirection: "row",
+        flexWrap: 'wrap',
+        alignItems: 'flex-start'
+      }}
+      >
         {this.renderScores()}
       </View>
       <ScrollView
-        horizontal
+        horizontal={true}
+        style={{
+          width: 300,
+          height: 150
+        }}
       >
         {this.renderAlbums()}
       </ScrollView>
