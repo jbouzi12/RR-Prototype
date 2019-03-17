@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
   View,
   Image,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import { Slider, Button } from 'react-native-elements';
 
@@ -147,7 +147,7 @@ export default class ArtistDetails extends Component<Props> {
             />
             <View
               style={{
-                width: "70%"
+                width: "100%"
               }}
             >
               <Text style={{flexWrap: 'wrap', color: "#FF365D", fontWeight: "bold"}}>{album.title}</Text>
