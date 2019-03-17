@@ -16,8 +16,9 @@ type AggregateUser {
 
 type Album {
   id: ID!
-  name: String!
+  title: String!
   artist: Artist!
+  image: String
   releaseDate: String
 }
 
@@ -28,8 +29,9 @@ type AlbumConnection {
 }
 
 input AlbumCreateInput {
-  name: String!
+  title: String!
   artist: ArtistCreateOneWithoutAlbumsInput!
+  image: String
   releaseDate: String
 }
 
@@ -39,7 +41,8 @@ input AlbumCreateManyWithoutArtistInput {
 }
 
 input AlbumCreateWithoutArtistInput {
-  name: String!
+  title: String!
+  image: String
   releaseDate: String
 }
 
@@ -51,8 +54,10 @@ type AlbumEdge {
 enum AlbumOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
+  title_ASC
+  title_DESC
+  image_ASC
+  image_DESC
   releaseDate_ASC
   releaseDate_DESC
   createdAt_ASC
@@ -63,7 +68,8 @@ enum AlbumOrderByInput {
 
 type AlbumPreviousValues {
   id: ID!
-  name: String!
+  title: String!
+  image: String
   releaseDate: String
 }
 
@@ -82,20 +88,34 @@ input AlbumScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   releaseDate: String
   releaseDate_not: String
   releaseDate_in: [String!]
@@ -134,18 +154,21 @@ input AlbumSubscriptionWhereInput {
 }
 
 input AlbumUpdateInput {
-  name: String
+  title: String
   artist: ArtistUpdateOneRequiredWithoutAlbumsInput
+  image: String
   releaseDate: String
 }
 
 input AlbumUpdateManyDataInput {
-  name: String
+  title: String
+  image: String
   releaseDate: String
 }
 
 input AlbumUpdateManyMutationInput {
-  name: String
+  title: String
+  image: String
   releaseDate: String
 }
 
@@ -167,7 +190,8 @@ input AlbumUpdateManyWithWhereNestedInput {
 }
 
 input AlbumUpdateWithoutArtistDataInput {
-  name: String
+  title: String
+  image: String
   releaseDate: String
 }
 
@@ -197,21 +221,35 @@ input AlbumWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
   artist: ArtistWhereInput
+  image: String
+  image_not: String
+  image_in: [String!]
+  image_not_in: [String!]
+  image_lt: String
+  image_lte: String
+  image_gt: String
+  image_gte: String
+  image_contains: String
+  image_not_contains: String
+  image_starts_with: String
+  image_not_starts_with: String
+  image_ends_with: String
+  image_not_ends_with: String
   releaseDate: String
   releaseDate_not: String
   releaseDate_in: [String!]
@@ -233,6 +271,7 @@ input AlbumWhereInput {
 
 input AlbumWhereUniqueInput {
   id: ID
+  title: String
 }
 
 type Artist {

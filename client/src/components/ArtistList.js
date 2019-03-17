@@ -210,6 +210,12 @@ const ARTISTS_QUERY = gql`
 			name
 			description
       image
+      albums {
+        id
+        title
+        image
+        releaseDate
+      }
       scores {
         id
         amount

@@ -8,8 +8,12 @@ function artists(parent, args, context, info) {
 
   let aritstQuery = filter && filter.length > 0 ? {where} : {}
 
-  return context.db.query.artists({ where })
+  return context.db.query.artists({ where }, info)
 
+}
+
+function artistSearch(parent, args, context, info) {
+    return context.db.query.artists({}, info)
 }
 
 
@@ -51,5 +55,6 @@ module.exports = {
 	album,
   score,
   scores,
-  user
+  user,
+  artistSearch
 }

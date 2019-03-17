@@ -1,7 +1,7 @@
 # import Artist from "./generated/prisma.graphql"
 
 type Query {
-	artists(filter: String!): [Artist]
+	artists(filter: String!): [Artist!]!
 	users: [User!]!
 	albums: [Album!]!
 	scores: [Score!]!
@@ -9,7 +9,7 @@ type Query {
 	album: Album!
 	score: Score!
 	user: User
-	searchArtists(filter: String!): [Artist]
+	artistSearch: [Artist!]!
 }
 
 
@@ -17,7 +17,7 @@ type Mutation {
 	newArtist(name: String!, description: String!, image: String!): Artist!
 	signup(email: String!, password: String!, name: String!): AuthPayload
 	login(email: String!, password: String!): AuthPayload
-	newAlbum(name: String!, artistName: String!): Album!
+	newAlbum(title: String!, name: String!, releaseDate: String, image: String): Album!
 	newScore(amount: Int!, category: String!, name: String!, email: String!): Score!
 	updateArtist(id: ID!, name: String, age: Int, description: String, image: String): Artist!
 	addTopArtist(id: ID!, email: String!): User!
@@ -29,8 +29,9 @@ type Mutation {
 
 type Album {
 	id: ID!
-	name: String!
+	title: String!
 	releaseDate: String
+	image: String
 	artist: Artist!
 }
 

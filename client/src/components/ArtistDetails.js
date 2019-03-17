@@ -7,7 +7,8 @@ import {
   Text,
   TouchableHighlight,
   View,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
 import { Slider, Button } from 'react-native-elements';
 
@@ -122,6 +123,27 @@ export default class ArtistDetails extends Component<Props> {
     })
   }
 
+  renderAlbums = () => {
+    if(this.props.artist.albums) {
+      return this.props.artist.albums.map((album) => {
+        return (
+          <View
+            key={album.id}
+          >
+            <Image
+             source={{uri: album.image ? album.image : ""}}
+             style={{
+               height: 60,
+               width: 60,
+             }}
+            />
+            <Text>{album.title}</Text><Text>{album.releaseDate}</Text>
+          </View>
+        )
+      })
+    }
+  }
+
   render() {
   	let artist = this.props.artist,
   		image = "",
@@ -169,6 +191,11 @@ export default class ArtistDetails extends Component<Props> {
       <View>
         {this.renderScores()}
       </View>
+      <ScrollView
+        horizontal
+      >
+        {this.renderAlbums()}
+      </ScrollView>
 	   </View>
     );
   }

@@ -56,9 +56,10 @@ async function newArtist(parent, args, context, info) {
 async function newAlbum(parent, args, context, info) {
 	return context.db.mutation.createAlbum({
 		data: {
-			name: args.name,
-			artist: {connect: {name: args.artistName}},
-			releaseDate: args.releaseDate
+			title: args.title,
+			artist: {connect: {name: args.name}},
+			releaseDate: args.releaseDate,
+			image: args.image
 		},
 	}, info)
 

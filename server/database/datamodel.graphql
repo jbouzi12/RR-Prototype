@@ -31,7 +31,8 @@ type Score {
 
 type Album {
 	id: ID! @unique
-	name: String!
+	title: String! @unique
 	artist: Artist!
+	image: String
 	releaseDate: String
 }
