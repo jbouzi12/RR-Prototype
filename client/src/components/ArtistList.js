@@ -38,6 +38,7 @@ class ArtistList extends Component<Props> {
       component: ArtistDetails,
       passProps: {
         artist: artist,
+        navigator: this.props.navigator,
         user: user
       }
     })

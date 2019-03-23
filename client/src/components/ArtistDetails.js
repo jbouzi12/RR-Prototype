@@ -11,31 +11,7 @@ import {
   ScrollView,
 } from 'react-native';
 import { Slider, Button } from 'react-native-elements';
-
-import { graphql, Mutation } from 'react-apollo';
-import gql from 'graphql-tag';
-
-
-let scores = [
-    {
-      name: "Flow"
-    },
-    {
-      name: "Delivery"
-    },
-    {
-      name: "Metaphor"
-    },
-    {
-      name: "Adlib"
-    },
-    {
-      name: "Beats"
-    }
-
-  ]
-;
-
+import ScoreForm from './scoreForm';
 
 export default class ArtistDetails extends Component<Props> {
 
@@ -47,86 +23,6 @@ export default class ArtistDetails extends Component<Props> {
     beats: 1
   }
 
-
-  renderScores = () => {
-
-
-    return scores.map((score, index) => {
-      return (
-          <View
-            key={index}
-            style={{
-              marginBottom: 15,
-              alignItems: "center",
-              // textAlign: "center",
-              width: "50%"
-            }}
-          >
-            <Text
-              style={{
-                fontWeight: "bold",
-                backgroundColor: "#ddd",
-                padding: 5,
-                color: "#FF365D"
-              }}
-            >
-              {score.name}
-            </Text>
-            <Mutation mutation={NEW_SCORE} >
-              {newScoreMutation => (
-                <Slider
-                  value={this.state[`${score.name.toLowerCase()}`]}
-                  onValueChange={(value) => {
-                    newScoreMutation({
-                      variables: {
-                        amount: value,
-                        category: score.name,
-                        name: this.props.artist.name,
-                        email: this.props.user && this.props.user.email ? this.props.user.email : null
-                      }
-                    })
-                    .then(({ data }) => {
-                      console.log('got data', data);
-                    })
-                    .catch((error) => {
-                      console.log('there was an error sending the query', error);
-                    })
-                  }}
-                  maximumValue = {5}
-                  step={1}
-                  style={{
-                    width: 120
-                  }}
-                  minimumTrackTintColor="#FF365D"
-                  thumbTintColor= "#ddd"
-                />
-              )}
-            </Mutation>
-            <View
-              style={{
-                // alignSelf: 'flex-start',
-                flexDirection: 'row',
-                alignItems: "center"
-              }}
-            >
-              <Text
-
-              >
-                Value:
-              </Text>
-              <Text
-                style={{
-                  color: "#FF365D"
-                }}
-              >
-                {this.state[`${score.name.toLowerCase()}`]}
-              </Text>
-            </View>
-          </View>
-      )
-    })
-  }
-
   renderAlbums = () => {
     if(this.props.artist.albums) {
       return this.props.artist.albums.map((album) => {
@@ -136,8 +32,7 @@ export default class ArtistDetails extends Component<Props> {
             style={{
               width: 120,
               marginRight: 10
-            }}
-          >
+            }} >
             <Image
              source={{uri: album.image ? album.image : ""}}
              style={{
@@ -159,11 +54,29 @@ export default class ArtistDetails extends Component<Props> {
     }
   }
 
+  rateArtist = () => {
+    const {
+      artist,
+      user
+    } = this.props;
+
+    this.props.navigator.push({
+      title: `${artist.name} Rating`,
+      component: ScoreForm,
+      passProps: {
+        user: user,
+        artist: artist
+      }
+    });
+  }
+
   render() {
-  	let artist = this.props.artist,
-  		image = "",
-      user = this.props.user
-  	;
+    const {
+      artist,
+      user,
+      navigator
+    } = this.props;
+    const image = artist.image;
 
     return (
 	   <View
@@ -193,6 +106,17 @@ export default class ArtistDetails extends Component<Props> {
             backgroundColor:"#FF365D"
           }}
         />
+        <Button
+          title="Rate Artist"
+          style={{
+            color:"fff",
+            marginTop:10
+          }}
+          buttonStyle={{
+            backgroundColor:"#FF365D"
+          }}
+          onPress={this.rateArtist}
+        />
 	  		<Text
 	  			style={{
 	  				paddingTop: 20,
@@ -203,15 +127,8 @@ export default class ArtistDetails extends Component<Props> {
 	  			{artist.description}
 	  		</Text>
       </View>
-      <View
-      style={{
-        flex: 2,
-        flexDirection: "row",
-        flexWrap: 'wrap',
-        alignItems: 'flex-start'
-      }}
-      >
-        {this.renderScores()}
+      <View style={{ flex: 2, flexDirection: "row",flexWrap: 'wrap', alignItems: 'flex-start'}}>
+        <ScoreForm artist={artist} user={user} />
       </View>
       <ScrollView
         horizontal={true}
@@ -246,27 +163,3 @@ const styles = StyleSheet.create({
     // flex: 0.7,
   },
 });
-
-const NEW_SCORE = gql`
-  mutation newScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
-    newScore(amount: $amount, category: $category, name: $name, email: $email) {
-      amount
-    }
-  }
-`
-
-const UPDATE_SCORE = gql`
-  mutation updateScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
-    updateScore(amount: $amount, category: $category, name: $name, email: $email) {
-      amount
-    }
-  }
-`
-
-const SCORE_QUERY = gql`
-  query scores($name: String!, $email: String!) {
-    score(name: $name, email: $email) {
-      amount
-    }
-  }
-`
