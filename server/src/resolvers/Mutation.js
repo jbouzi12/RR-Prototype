@@ -66,15 +66,28 @@ async function newAlbum(parent, args, context, info) {
 }
 
 async function newScore(parent, args, context, info) {
+	let scores = [];
 
-	return context.db.mutation.createScore({
-		data: {
-			category: args.category,
-			artist: {connect: {name: args.name}},
-			amount: args.amount,
-			user: {connect: {email: args.email}}
-		},
-	}, info)
+	args.scores.map(score => {
+		const newScore = await context.db.mutation.createScore({
+			data: {
+				category: score.category,
+				artist: {connect: {name: args.name}},
+				amount: score.amount,
+				user: {connect: {email: args.email}}
+			}
+		}, info)
+		scores.push(newScore);
+	});
+	return scores;
+	// return context.db.mutation.createScore({
+	// 	data: {
+	// 		category: args.category,
+	// 		artist: {connect: {name: args.name}},
+	// 		amount: args.amount,
+	// 		user: {connect: {email: args.email}}
+	// 	},
+	// }, info)
 
 }
 
