@@ -17,7 +17,7 @@ type User {
 	name: String!
 	password: String!
 	artists: [Artist!]!
-	scores: [Score]
+	scores: [Score!]!
 }
 
 
@@ -26,7 +26,7 @@ type Score {
 	category: String!
 	amount: Int!
 	artist: Artist!
-	user: User
+	user: User!
 }
 
 type Album {

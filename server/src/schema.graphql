@@ -18,7 +18,7 @@ type Mutation {
 	signup(email: String!, password: String!, name: String!): AuthPayload
 	login(email: String!, password: String!): AuthPayload
 	newAlbum(title: String!, name: String!, releaseDate: String, image: String): Album!
-	newScore(scores: [category: String!, amount: Int!, artist: Artist!, user: User!]!): [Score!]!
+	newScore(amount: Int!, category: String!, name: String!, email: String!): Score!	
 	updateArtist(id: ID!, name: String, age: Int, description: String, image: String): Artist!
 	addTopArtist(id: ID!, email: String!): User!
 	removeTopArtist(id: ID!, email: String!): User!
@@ -54,5 +54,5 @@ type User {
 	name: String!
 	email: String!
 	artists: [Artist!]!
-	scores: [Score]
+	scores: [Score!]!
 }

@@ -700,7 +700,7 @@ type Score {
   category: String!
   amount: Int!
   artist: Artist!
-  user: User
+  user: User!
 }
 
 type ScoreConnection {
@@ -713,7 +713,7 @@ input ScoreCreateInput {
   category: String!
   amount: Int!
   artist: ArtistCreateOneWithoutScoresInput!
-  user: UserCreateOneWithoutScoresInput
+  user: UserCreateOneWithoutScoresInput!
 }
 
 input ScoreCreateManyWithoutArtistInput {
@@ -729,7 +729,7 @@ input ScoreCreateManyWithoutUserInput {
 input ScoreCreateWithoutArtistInput {
   category: String!
   amount: Int!
-  user: UserCreateOneWithoutScoresInput
+  user: UserCreateOneWithoutScoresInput!
 }
 
 input ScoreCreateWithoutUserInput {
@@ -826,7 +826,7 @@ input ScoreUpdateInput {
   category: String
   amount: Int
   artist: ArtistUpdateOneRequiredWithoutScoresInput
-  user: UserUpdateOneWithoutScoresInput
+  user: UserUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateManyDataInput {
@@ -871,7 +871,7 @@ input ScoreUpdateManyWithWhereNestedInput {
 input ScoreUpdateWithoutArtistDataInput {
   category: String
   amount: Int
-  user: UserUpdateOneWithoutScoresInput
+  user: UserUpdateOneRequiredWithoutScoresInput
 }
 
 input ScoreUpdateWithoutUserDataInput {
@@ -1051,12 +1051,10 @@ input UserUpdateManyMutationInput {
   password: String
 }
 
-input UserUpdateOneWithoutScoresInput {
+input UserUpdateOneRequiredWithoutScoresInput {
   create: UserCreateWithoutScoresInput
   update: UserUpdateWithoutScoresDataInput
   upsert: UserUpsertWithoutScoresInput
-  delete: Boolean
-  disconnect: Boolean
   connect: UserWhereUniqueInput
 }
 
