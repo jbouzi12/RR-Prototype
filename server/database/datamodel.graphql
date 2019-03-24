@@ -26,7 +26,8 @@ type Score {
 	category: String!
 	amount: Int!
 	artist: Artist!
-	user: User!
+	user: User!,
+	date: String!
 }
 
 type Album {

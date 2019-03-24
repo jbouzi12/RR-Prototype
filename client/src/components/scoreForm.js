@@ -34,7 +34,7 @@ const ScoreForm = ({ user, artist }) => {
     // amount, category, name, email
     // const submitNewScore = useMutation(NEW_SCORE);
     // const [isSubmitted, setIsSubmitted] = useState(false);
-
+    console.log("USER:", user, "ARTIST:", artist)
     return scores.map((score, index) => (
         <View
           key={index}

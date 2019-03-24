@@ -4,7 +4,7 @@ type Query {
 	artists(filter: String!): [Artist!]!
 	users: [User!]!
 	albums: [Album!]!
-	scores: [Score!]!
+	scores(email: String, name: String): [Score!]!
 	artist: Artist!
 	album: Album!
 	score: Score!
@@ -18,7 +18,7 @@ type Mutation {
 	signup(email: String!, password: String!, name: String!): AuthPayload
 	login(email: String!, password: String!): AuthPayload
 	newAlbum(title: String!, name: String!, releaseDate: String, image: String): Album!
-	newScore(amount: Int!, category: String!, name: String!, email: String!): Score!	
+	newScore(amount: Int!, category: String!, name: String!, email: String!): Score!
 	updateArtist(id: ID!, name: String, age: Int, description: String, image: String): Artist!
 	addTopArtist(id: ID!, email: String!): User!
 	removeTopArtist(id: ID!, email: String!): User!
@@ -42,6 +42,7 @@ type Score {
 	amount: Int!
 	artist: Artist!
 	user: User!
+	date: String!
 }
 
 type AuthPayload {

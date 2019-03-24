@@ -701,6 +701,7 @@ type Score {
   amount: Int!
   artist: Artist!
   user: User!
+  date: String!
 }
 
 type ScoreConnection {
@@ -714,6 +715,7 @@ input ScoreCreateInput {
   amount: Int!
   artist: ArtistCreateOneWithoutScoresInput!
   user: UserCreateOneWithoutScoresInput!
+  date: String!
 }
 
 input ScoreCreateManyWithoutArtistInput {
@@ -730,12 +732,14 @@ input ScoreCreateWithoutArtistInput {
   category: String!
   amount: Int!
   user: UserCreateOneWithoutScoresInput!
+  date: String!
 }
 
 input ScoreCreateWithoutUserInput {
   category: String!
   amount: Int!
   artist: ArtistCreateOneWithoutScoresInput!
+  date: String!
 }
 
 type ScoreEdge {
@@ -750,6 +754,8 @@ enum ScoreOrderByInput {
   category_DESC
   amount_ASC
   amount_DESC
+  date_ASC
+  date_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -760,6 +766,7 @@ type ScorePreviousValues {
   id: ID!
   category: String!
   amount: Int!
+  date: String!
 }
 
 input ScoreScalarWhereInput {
@@ -799,6 +806,20 @@ input ScoreScalarWhereInput {
   amount_lte: Int
   amount_gt: Int
   amount_gte: Int
+  date: String
+  date_not: String
+  date_in: [String!]
+  date_not_in: [String!]
+  date_lt: String
+  date_lte: String
+  date_gt: String
+  date_gte: String
+  date_contains: String
+  date_not_contains: String
+  date_starts_with: String
+  date_not_starts_with: String
+  date_ends_with: String
+  date_not_ends_with: String
   AND: [ScoreScalarWhereInput!]
   OR: [ScoreScalarWhereInput!]
   NOT: [ScoreScalarWhereInput!]
@@ -827,16 +848,19 @@ input ScoreUpdateInput {
   amount: Int
   artist: ArtistUpdateOneRequiredWithoutScoresInput
   user: UserUpdateOneRequiredWithoutScoresInput
+  date: String
 }
 
 input ScoreUpdateManyDataInput {
   category: String
   amount: Int
+  date: String
 }
 
 input ScoreUpdateManyMutationInput {
   category: String
   amount: Int
+  date: String
 }
 
 input ScoreUpdateManyWithoutArtistInput {
@@ -872,12 +896,14 @@ input ScoreUpdateWithoutArtistDataInput {
   category: String
   amount: Int
   user: UserUpdateOneRequiredWithoutScoresInput
+  date: String
 }
 
 input ScoreUpdateWithoutUserDataInput {
   category: String
   amount: Int
   artist: ArtistUpdateOneRequiredWithoutScoresInput
+  date: String
 }
 
 input ScoreUpdateWithWhereUniqueWithoutArtistInput {
@@ -941,6 +967,20 @@ input ScoreWhereInput {
   amount_gte: Int
   artist: ArtistWhereInput
   user: UserWhereInput
+  date: String
+  date_not: String
+  date_in: [String!]
+  date_not_in: [String!]
+  date_lt: String
+  date_lte: String
+  date_gt: String
+  date_gte: String
+  date_contains: String
+  date_not_contains: String
+  date_starts_with: String
+  date_not_starts_with: String
+  date_ends_with: String
+  date_not_ends_with: String
   AND: [ScoreWhereInput!]
   OR: [ScoreWhereInput!]
   NOT: [ScoreWhereInput!]

@@ -8,8 +8,18 @@ function artists(parent, args, context, info) {
 
   let aritstQuery = filter && filter.length > 0 ? {where} : {}
 
-  return context.db.query.artists({ where }, info)
+  return context.db.query.artists(artistQuery, info)
 
+}
+
+function scores(parent, args, context, info) {
+    const where = args.email && args. name ?
+    {AND: [{user: {email: args.email}}, {artist: {name: args.name}}]} :
+    {}
+
+    let scoreQuery = !args.email && !args.name ? {} : {where}
+
+    return context.db.query.scores(scoreQuery, info)
 }
 
 function artistSearch(parent, args, context, info) {
@@ -37,10 +47,6 @@ function score(root, args, context, info) {
 	return context.db.query.score({ where: {id: root.score.id}}, info)
 }
 
-
-function scores(parent, args, context, info) {
-    return context.db.query.scores({}, info)
-}
 
 function user(parent, args, context, info) {
     const userId = getUserId(context)

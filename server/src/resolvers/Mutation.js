@@ -67,12 +67,15 @@ async function newAlbum(parent, args, context, info) {
 
 async function newScore(parent, args, context, info) {
 
+	const newDate = new Date()
+
 	return context.db.mutation.createScore({
 		data: {
 			category: args.category,
 			artist: {connect: {name: args.name}},
 			amount: args.amount,
-			user: {connect: {email: args.email}}
+			user: {connect: {email: args.email}},
+			date: newDate.toLocaleDateString()
 		},
 	}, info)
 
