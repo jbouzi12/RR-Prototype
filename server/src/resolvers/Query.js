@@ -6,7 +6,7 @@ function artists(parent, args, context, info) {
     ? { OR: [{ name_contains: filter }] }
     : {}
 
-  let aritstQuery = filter && filter.length > 0 ? {where} : {}
+  let artistQuery = filter && filter.length > 0 ? {where} : {}
 
   return context.db.query.artists(artistQuery, info)
 

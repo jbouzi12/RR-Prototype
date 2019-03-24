@@ -18,8 +18,9 @@ export const UPDATE_SCORE = gql`
 
 export const SCORE_QUERY = gql`
   query scores($name: String!, $email: String!) {
-    score(name: $name, email: $email) {
+    scores(name: $name, email: $email) {
       amount
+      category
     }
   }
 `

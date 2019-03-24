@@ -253,6 +253,7 @@ const USER_QUERY = gql`
       }
       scores {
         id
+        category
         amount
         user {
           id
