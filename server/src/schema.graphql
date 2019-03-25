@@ -10,6 +10,7 @@ type Query {
 	score: Score!
 	user: User
 	artistSearch: [Artist!]!
+	scoreAverage(name: String!, category: String!): Int!
 }
 
 

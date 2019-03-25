@@ -13,13 +13,33 @@ function artists(parent, args, context, info) {
 }
 
 function scores(parent, args, context, info) {
-    const where = args.email && args. name ?
+    const where = args.email && args.name ?
     {AND: [{user: {email: args.email}}, {artist: {name: args.name}}]} :
     {}
 
     let scoreQuery = !args.email && !args.name ? {} : {where}
 
     return context.db.query.scores(scoreQuery, info)
+}
+
+async function scoreAverage(parent, args, context, info) {
+
+  const where = args.name && args.category ?
+  {AND: [{artist: {name: args.name}},{category: args.category}]}
+  : {}
+
+  const scores = await context.db.query.scores({where})
+
+  let scoreSum = 0;
+  if(scores && scores.length) {
+    scores.map((score) => {
+      scoreSum = scoreSum + score.amount
+    })
+    return scoreSum/scores.length
+
+  }
+
+  return 0
 }
 
 function artistSearch(parent, args, context, info) {
@@ -62,5 +82,6 @@ module.exports = {
   score,
   scores,
   user,
-  artistSearch
+  artistSearch,
+  scoreAverage
 }
