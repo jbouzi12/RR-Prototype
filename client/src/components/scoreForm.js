@@ -30,28 +30,28 @@ const scoreNames = [
   ]
 ;
 
-const createScore = (args) => {
-
-  return `
-    ${alias}: newScore(category: "${args.category}", amount: "${args.amount}", name: "${args.name}", email: "${args.email}") {
-      id
-    }
-  `
-}
-
-const createScores = (mutations) => {
-  const joinedMutations = mutations.join('\n')
-
-  return `
-  mutation createScores {
-    ${joinedMutations}
-  }
-  `
-}
-
-const mutations  = ["Edgar Allan Poe", "Arthur Conan Doyle"]
-  .map(name => createAuthor(name))
-const result = createAuthors(mutations)
+// const createScore = (args) => {
+//
+//   return `
+//     ${alias}: newScore(category: "${args.category}", amount: "${args.amount}", name: "${args.name}", email: "${args.email}") {
+//       id
+//     }
+//   `
+// }
+//
+// const createScores = (mutations) => {
+//   const joinedMutations = mutations.join('\n')
+//
+//   return `
+//   mutation createScores {
+//     ${joinedMutations}
+//   }
+//   `
+// }
+//
+// const mutations  = ["Edgar Allan Poe", "Arthur Conan Doyle"]
+//   .map(name => createAuthor(name))
+// const result = createAuthors(mutations)
 
 
 class ScoreForm extends Component<Props> {

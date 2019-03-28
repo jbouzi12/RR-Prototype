@@ -31,6 +31,7 @@ async function scoreAverage(parent, args, context, info) {
   const scores = await context.db.query.scores({where})
 
   let scoreSum = 0;
+
   if(scores && scores.length) {
     scores.map((score) => {
       scoreSum = scoreSum + score.amount

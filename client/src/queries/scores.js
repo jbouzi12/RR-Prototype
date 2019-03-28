@@ -8,6 +8,8 @@ export const NEW_SCORE = gql`
   }
 `
 
+
+
 export const UPDATE_SCORE = gql`
   mutation updateScore($amount: Int!, $category: String!, $name: String!, $email: String!) {
     updateScore(amount: $amount, category: $category, name: $name, email: $email) {
@@ -16,11 +18,18 @@ export const UPDATE_SCORE = gql`
   }
 `
 
+
+
 export const SCORE_QUERY = gql`
   query scores($name: String!, $email: String!) {
     scores(name: $name, email: $email) {
       amount
       category
     }
+  }
+`
+export const SCORE_AVERAGE_QUERY = gql`
+  query scoreAverage($name: String!, $category: String!){
+    scoreAverage(name: $name, category: $category)
   }
 `

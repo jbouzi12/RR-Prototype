@@ -6,7 +6,7 @@
 	<integer>9</integer>
 	<key>logs</key>
 	<dict>
-		<key>7C61030A-5199-4033-9EE6-DDD93DD6F728</key>
+		<key>18AD03EA-DA6B-4EE6-9D94-E7D526C71780</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -15,7 +15,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>7C61030A-5199-4033-9EE6-DDD93DD6F728.xcactivitylog</string>
+			<string>18AD03EA-DA6B-4EE6-9D94-E7D526C71780.xcactivitylog</string>
 			<key>highLevelStatus</key>
 			<string>W</string>
 			<key>schemeIdentifier-containerName</key>
@@ -27,15 +27,15 @@
 			<key>signature</key>
 			<string>Building project prototype with scheme prototype and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>574386603.84079897</real>
+			<real>575466132.17180395</real>
 			<key>timeStoppedRecording</key>
-			<real>574386618.33361602</real>
+			<real>575466135.89203095</real>
 			<key>title</key>
 			<string>Building project prototype with scheme prototype and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>7C61030A-5199-4033-9EE6-DDD93DD6F728</string>
+			<string>18AD03EA-DA6B-4EE6-9D94-E7D526C71780</string>
 		</dict>
-		<key>A4FB21AD-C2C2-459E-B371-A8F48D50B09F</key>
+		<key>53ED2D52-25D6-4204-A9B0-949C338FA65E</key>
 		<dict>
 			<key>className</key>
 			<string>IDECommandLineBuildLog</string>
@@ -44,7 +44,7 @@
 			<key>domainType</key>
 			<string>Xcode.IDEActivityLogDomainType.BuildLog</string>
 			<key>fileName</key>
-			<string>A4FB21AD-C2C2-459E-B371-A8F48D50B09F.xcactivitylog</string>
+			<string>53ED2D52-25D6-4204-A9B0-949C338FA65E.xcactivitylog</string>
 			<key>highLevelStatus</key>
 			<string>W</string>
 			<key>schemeIdentifier-containerName</key>
@@ -56,13 +56,13 @@
 			<key>signature</key>
 			<string>Building project prototype with scheme prototype and configuration Debug</string>
 			<key>timeStartedRecording</key>
-			<real>575152267.36723197</real>
+			<real>575249282.16915596</real>
 			<key>timeStoppedRecording</key>
-			<real>575152308.69161499</real>
+			<real>575249287.41526198</real>
 			<key>title</key>
 			<string>Building project prototype with scheme prototype and configuration Debug</string>
 			<key>uniqueIdentifier</key>
-			<string>A4FB21AD-C2C2-459E-B371-A8F48D50B09F</string>
+			<string>53ED2D52-25D6-4204-A9B0-949C338FA65E</string>
 		</dict>
 	</dict>
 </dict>

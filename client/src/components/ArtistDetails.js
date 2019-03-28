@@ -1,6 +1,7 @@
 import { _ } from 'lodash';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { graphql, Mutation, Query } from 'react-apollo';
 import {
   FlatList,
   StyleSheet,
@@ -12,6 +13,32 @@ import {
 } from 'react-native';
 import { Slider, Button } from 'react-native-elements';
 import ScoreForm from './scoreForm';
+import {
+  SCORE_AVERAGE_QUERY
+} from '../queries/scores';
+
+import ScoreAverages from './scoreAverages'
+
+
+const scoreNames = [
+    {
+      name: "Flow"
+    },
+    {
+      name: "Delivery"
+    },
+    {
+      name: "Metaphor"
+    },
+    {
+      name: "Adlib"
+    },
+    {
+      name: "Beats"
+    }
+
+  ]
+;
 
 export default class ArtistDetails extends Component<Props> {
 
@@ -52,6 +79,15 @@ export default class ArtistDetails extends Component<Props> {
         )
       })
     }
+  }
+
+  renderScores = () => {
+    console.log("HIT")
+    return scoreNames.map((score, index) => {
+      return (
+        <ScoreAverages key={this.props.artist.id} artist={this.props.artist} score={score} />
+      )
+    })
   }
 
   rateArtist = () => {
@@ -128,7 +164,7 @@ export default class ArtistDetails extends Component<Props> {
 	  		</Text>
       </View>
       <View style={{ flex: 2, flexDirection: "row",flexWrap: 'wrap', alignItems: 'flex-start'}}>
-        <ScoreForm artist={artist} user={user} />
+        {this.renderScores()}
       </View>
       <ScrollView
         horizontal={true}
