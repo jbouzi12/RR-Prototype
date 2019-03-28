@@ -72,7 +72,7 @@ export default class ArtistDetails extends Component<Props> {
                 width: "100%"
               }}
             >
-              <Text style={{flexWrap: 'wrap', color: "#FF365D", fontWeight: "bold"}}>{album.title}</Text>
+              <Text style={{flexWrap: 'wrap', color: "#008080", fontWeight: "bold"}}>{album.title}</Text>
               <Text style={{flexWrap: 'wrap', fontStyle: "italic"}}t>{album.releaseDate}</Text>
             </View>
           </View>
@@ -139,7 +139,7 @@ export default class ArtistDetails extends Component<Props> {
             marginTop:10
           }}
           buttonStyle={{
-            backgroundColor:"#FF365D"
+            backgroundColor:"#008080"
           }}
         />
         <Button
@@ -149,7 +149,7 @@ export default class ArtistDetails extends Component<Props> {
             marginTop:10
           }}
           buttonStyle={{
-            backgroundColor:"#FF365D"
+            backgroundColor:"#008080"
           }}
           onPress={this.rateArtist}
         />

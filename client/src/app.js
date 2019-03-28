@@ -60,8 +60,8 @@ export default class App extends Component<Props> {
 	     <NavigatorIOS
 	     	style={{flex:1}}
         barTintColor='#fff'
-        titleTextColor='#FF365D'
-        tintColor='#FF365D'
+        titleTextColor='#008080'
+        tintColor='#008080'
 	     	initialRoute={{
           component: ArtistList,
 	     		title: 'Artists',

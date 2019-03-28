@@ -97,7 +97,7 @@ class ScoreForm extends Component<Props> {
                 fontWeight: "bold",
                 backgroundColor: "#ddd",
                 padding: 5,
-                color: "#FF365D"
+                color: "#008080"
               }}
             >
               {score.name}
@@ -127,7 +127,7 @@ class ScoreForm extends Component<Props> {
                   style={{
                     width: 120
                   }}
-                  minimumTrackTintColor="#FF365D"
+                  minimumTrackTintColor="#008080"
                   thumbTintColor= "#ddd"
                 />
               )}
@@ -139,7 +139,7 @@ class ScoreForm extends Component<Props> {
               }}
             >
               <Text > Value: </Text>
-              <Text style={{ color: "#FF365D" }} >
+              <Text style={{ color: "#008080" }} >
                 {this.checkScore(score.name, scores)}
               </Text>
             </View>
@@ -169,7 +169,7 @@ class ScoreForm extends Component<Props> {
                     marginTop:10
                   }}
                   buttonStyle={{
-                    backgroundColor:"#FF365D"
+                    backgroundColor:"#008080"
                   }}
                 />
               </View>

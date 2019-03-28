@@ -42,7 +42,7 @@ import { graphql, Mutation, withApollo } from 'react-apollo';
             buttonGroup = {{
               buttons: [followButton],
               textStyle: {
-                color: "#FF365D"
+                color: "#008080"
               },
               onPress: () => updateTopArtistsMutation({
                 variables: {

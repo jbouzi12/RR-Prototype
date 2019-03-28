@@ -136,7 +136,7 @@ class ArtistList extends Component<Props> {
             style={{
               fontWeight: "bold",
               margin: 10,
-              color: "#FF365D"
+              color: "#008080"
             }}
            >
             {this.state.currentArtist && this.state.currentArtist.name ? this.state.currentArtist.name : ""}

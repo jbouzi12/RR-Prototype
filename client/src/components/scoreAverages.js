@@ -42,13 +42,13 @@ import {
                   fontWeight: "bold",
                   backgroundColor: "#ddd",
                   padding: 5,
-                  color: "#FF365D"
+                  color: "#008080"
                 }}
               >
                 {this.props.score.name}
               </Text>
               <Text > Value: </Text>
-              <Text style={{ color: "#FF365D" }} >
+              <Text style={{ color: "#008080" }} >
                 {scoreAverage}
               </Text>
             </View>
